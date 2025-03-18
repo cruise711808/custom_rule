@@ -1,1 +1,1 @@
-# Clash_Rule_Custom
+# Clash 自定义规则
