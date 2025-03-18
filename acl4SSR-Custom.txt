@@ -1,7 +1,7 @@
 [custom]
 ;不要随意改变关键字，否则会导致出错
 ;acl4SSR-Custom规则
-;灵魂云v4
+;灵魂云v5
 
 ;去广告：支持
 ;自动测速：支持
@@ -11,7 +11,9 @@
 ;增强国外GFW：支持
 
 ;设置规则标志位
-ruleset=🌏 全球直连,[]DOMAIN-SUFFIX,sharvo.top
+ruleset=🌏 全球直连,https://raw.githubusercontent.com/cruise711808/Clash_Rule_Custom/refs/heads/main/ruleset/DirectCustom.list
+ruleset=⬇️ 下载程序,https://raw.githubusercontent.com/cruise711808/Clash_Rule_Custom/refs/heads/main/ruleset/DownloadCustom.list
+ruleset=🔰 节点选择,https://raw.githubusercontent.com/cruise711808/Clash_Rule_Custom/refs/heads/main/ruleset/ProxyCustom.list
 ruleset=🌏 全球直连,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/LocalAreaNetwork.list
 ruleset=🌏 全球直连,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/UnBan.list
 ruleset=🛑 广告拦截,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanAD.list
