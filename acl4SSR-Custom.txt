@@ -3,9 +3,9 @@
 ;acl4SSR-Custom规则
 
 ;设置规则标志位
-ruleset=🌏 全球直连,https://raw.githubusercontent.com/cruise711808/Clash_Rule_Custom/refs/heads/main/ruleset/DirectCustom.list
-ruleset=⬇️ 下载程序,https://raw.githubusercontent.com/cruise711808/Clash_Rule_Custom/refs/heads/main/ruleset/DownloadCustom.list
-ruleset=🔰 节点选择,https://raw.githubusercontent.com/cruise711808/Clash_Rule_Custom/refs/heads/main/ruleset/ProxyCustom.list
+ruleset=🌏 全球直连,https://raw.githubusercontent.com/cruise711808/Clash_Rule_Custom/main/ruleset/DirectCustom.list
+ruleset=⬇️ 下载程序,https://raw.githubusercontent.com/cruise711808/Clash_Rule_Custom/main/ruleset/DownloadCustom.list
+ruleset=🔰 节点选择,https://raw.githubusercontent.com/cruise711808/Clash_Rule_Custom/main/ruleset/ProxyCustom.list
 ruleset=🌏 全球直连,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/LocalAreaNetwork.list
 ruleset=🌏 全球直连,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/UnBan.list
 ruleset=🛑 广告拦截,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanAD.list
