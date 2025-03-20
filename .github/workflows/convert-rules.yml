@@ -2,17 +2,21 @@ name: Convert Clash Rules
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # 每天 00:00 UTC（北京时间 08:00）触发
+    - cron: '0 0 * * *'  # 每天 00:00 UTC 触发
   workflow_dispatch:  # 允许手动触发
 
 jobs:
   check-and-convert:
     runs-on: ubuntu-latest
     steps:
-      - name: 检查出发原因
+      - name: 拉取 Git 仓库
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 这里是关键，确保完整克隆仓库
+
+      - name: 检查任务触发原因
         run: echo "启动 Clash 规则转换任务"
 
-      # 1. 获取最新 Release 信息
       - name: 获取最新 Clash Rules Release 版本
         id: get_latest_release
         run: |
@@ -21,11 +25,9 @@ jobs:
             echo "未找到最新版本，退出..."
             exit 1
           fi
-          echo "最新版本: $LATEST_RELEASE"
           echo "LATEST_RELEASE=$LATEST_RELEASE" >> $GITHUB_ENV
 
-      # 2. 下载 Clash Rules Release 下的所有 .txt 规则
-      - name: 下载最新的规则文件
+      - name: 下载最新规则文件
         run: |
           mkdir -p rules
           cd rules
@@ -35,7 +37,6 @@ jobs:
           done
           ls -l
 
-      # 3. 安装 mihomo （使用 .deb 版本）
       - name: 获取 mihomo 最新版本号
         id: get_mihomo_version
         run: |
@@ -58,22 +59,21 @@ jobs:
 
       - name: 转换 .txt 文件为 .mrs
         run: |
-          mkdir -p converted_rules
+          mkdir -p converted_rules/Loyalsoldier
           for file in rules/*.txt; do
             base_name=$(basename "$file" .txt)
-            mihomo convert-ruleset domain text "$file" "converted_rules/$base_name.mrs"
+            mihomo convert-ruleset domain text "$file" "converted_rules/Loyalsoldier/$base_name.mrs"
           done
-          ls -l converted_rules
+          ls -l converted_rules/Loyalsoldier
 
       - name: 上传转换后的文件到仓库
         run: |
           git config --global user.email "github-actions@github.com"
           git config --global user.name "GitHub Actions"
-          git add converted_rules/*
+          git add converted_rules/Loyalsoldier/*
           git commit -m "更新 Clash 规则 MRS 格式: ${{ env.LATEST_RELEASE }}" || echo "No changes to commit"
           git push origin main || echo "No changes to push"
-          
-      # 4. 上传转换后的 .mrs 文件到 Release
+
       - name: 发布到 GitHub Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
