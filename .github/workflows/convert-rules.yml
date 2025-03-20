@@ -54,7 +54,7 @@ jobs:
 
       - name: 确保 mihomo 可用
         run: |
-          mihomo --version || { echo "mihomo 安装失败"; exit 1; }
+          mihomo -v || { echo "mihomo 安装失败"; exit 1; }
 
       - name: 转换 .txt 文件为 .mrs
         run: |
