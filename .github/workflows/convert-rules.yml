@@ -25,12 +25,20 @@ jobs:
         run: |
           mkdir rules
           cd rules
-          wget -q https://raw.githubusercontent.com/Loyalsoldier/clash-rules/${{ env.LATEST_RELEASE }}/direct.txt
-          wget -q https://raw.githubusercontent.com/Loyalsoldier/clash-rules/${{ env.LATEST_RELEASE }}/proxy.txt
-          wget -q https://raw.githubusercontent.com/Loyalsoldier/clash-rules/${{ env.LATEST_RELEASE }}/reject.txt
-          wget -q https://raw.githubusercontent.com/Loyalsoldier/clash-rules/${{ env.LATEST_RELEASE }}/icloud.txt
-          wget -q https://raw.githubusercontent.com/Loyalsoldier/clash-rules/${{ env.LATEST_RELEASE }}/apple.txt
-          wget -q https://raw.githubusercontent.com/Loyalsoldier/clash-rules/${{ env.LATEST_RELEASE }}/google.txt
+          wget -q https://github.com/Loyalsoldier/clash-rules/releases/download/${{ env.LATEST_RELEASE }}/apple.txt
+          wget -q https://github.com/Loyalsoldier/clash-rules/releases/download/${{ env.LATEST_RELEASE }}/applications.txt
+          wget -q https://github.com/Loyalsoldier/clash-rules/releases/download/${{ env.LATEST_RELEASE }}/cncidr.txt
+          wget -q https://github.com/Loyalsoldier/clash-rules/releases/download/${{ env.LATEST_RELEASE }}/direct.txt
+          wget -q https://github.com/Loyalsoldier/clash-rules/releases/download/${{ env.LATEST_RELEASE }}/gfw.txt
+          wget -q https://github.com/Loyalsoldier/clash-rules/releases/download/${{ env.LATEST_RELEASE }}/google.txt
+          wget -q https://github.com/Loyalsoldier/clash-rules/releases/download/${{ env.LATEST_RELEASE }}/greatfire.txt
+          wget -q https://github.com/Loyalsoldier/clash-rules/releases/download/${{ env.LATEST_RELEASE }}/icloud.txt
+          wget -q https://github.com/Loyalsoldier/clash-rules/releases/download/${{ env.LATEST_RELEASE }}/lancidr.txt
+          wget -q https://github.com/Loyalsoldier/clash-rules/releases/download/${{ env.LATEST_RELEASE }}/private.txt
+          wget -q https://github.com/Loyalsoldier/clash-rules/releases/download/${{ env.LATEST_RELEASE }}/proxy.txt
+          wget -q https://github.com/Loyalsoldier/clash-rules/releases/download/${{ env.LATEST_RELEASE }}/reject.txt
+          wget -q https://github.com/Loyalsoldier/clash-rules/releases/download/${{ env.LATEST_RELEASE }}/telegramcidr.txt
+          wget -q https://github.com/Loyalsoldier/clash-rules/releases/download/${{ env.LATEST_RELEASE }}/tld-not-cn.txt
           ls -l
 
       # 3. 安装 mihomo 并转换规则
