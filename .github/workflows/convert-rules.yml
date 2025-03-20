@@ -65,9 +65,17 @@ jobs:
           done
           ls -l converted_rules
 
+      - name: 上传转换后的文件到仓库
+        run: |
+          git config --global user.email "github-actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git add converted_rules/*
+          git commit -m "更新 Clash 规则 MRS 格式: ${{ env.LATEST_RELEASE }}" || echo "No changes to commit"
+          git push origin main || echo "No changes to push"
+          
       # 4. 上传转换后的 .mrs 文件到 Release
-      - name: 发布到 Release
+      - name: 发布到 GitHub Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create "${{ env.LATEST_RELEASE }}" converted_rules/* --title "Converted Rules ${{ env.LATEST_RELEASE }}" --notes "自动转换 Clash 规则为 MRS 格式"
+          gh release create "${{ env.LATEST_RELEASE }}" converted_rules/Loyalsoldier/* --title "Converted Rules ${{ env.LATEST_RELEASE }}" --notes "自动转换 Clash 规则为 MRS 格式" || echo "Release already exists"
