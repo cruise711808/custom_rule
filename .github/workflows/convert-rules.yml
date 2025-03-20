@@ -5,12 +5,17 @@ on:
     - cron: '0 0 * * *'  # 每天 00:00 UTC（北京时间 08:00）触发
   workflow_dispatch:  # 允许手动触发
 
+permissions:
+  contents: write  # 赋予 GITHUB_TOKEN 写入权限
+
 jobs:
   check-and-convert:
     runs-on: ubuntu-latest
     steps:
       - name: 克隆仓库
-        uses: actions/checkout@v4  # 重要：必须先克隆仓库，才能进行 git 提交
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}  # 确保使用 GitHub 提供的 Token
 
       - name: 获取最新 Clash Rules Release 版本
         id: get_latest_release
@@ -75,7 +80,6 @@ jobs:
         run: |
           git config --global user.email "github-actions@github.com"
           git config --global user.name "GitHub Actions"
-          git status  # 检查变更状态
-          git add converted_rules/Loyalsoldier/* || echo "没有文件可添加"
+          git add converted_rules/Loyalsoldier/*
           git commit -m "更新 Clash 规则 MRS 格式: ${{ env.LATEST_RELEASE }}" || echo "No changes to commit"
           git push origin main || echo "No changes to push"
