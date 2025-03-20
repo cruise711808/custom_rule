@@ -61,7 +61,7 @@ jobs:
           mkdir -p converted_rules
           for file in rules/*.txt; do
             base_name=$(basename "$file" .txt)
-            mihomo convert-ruleset domain txt "$file" "converted_rules/$base_name.mrs"
+            mihomo convert-ruleset domain text "$file" "converted_rules/$base_name.mrs"
           done
           ls -l converted_rules
 
