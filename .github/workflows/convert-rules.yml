@@ -31,7 +31,7 @@ jobs:
           cd rules
           FILES=(applications.txt cncidr.txt direct.txt gfw.txt google.txt greatfire.txt lancidr.txt private.txt reject.txt telegramcidr.txt tld-not-cn.txt)
           for file in "${FILES[@]}"; do
-            wget -q --retry-connrefused --waitretry=5 --timeout=30 --tries=5 "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/${{ env.LATEST_RELEASE }}/$file" || { echo "下载 $file 失败"; exit 1; }
+            wget -q --retry-connrefused --waitretry=5 --timeout=30 --tries=5 "https://github.com/Loyalsoldier/clash-rules/releases/download/${{ env.LATEST_RELEASE }}/$file" || { echo "下载 $file 失败"; exit 1; }
           done
           ls -l
 
