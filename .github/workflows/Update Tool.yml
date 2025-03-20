@@ -1,0 +1,55 @@
+name: Update Tool
+
+on:
+  schedule:
+    # 每天定时检查（UTC 时间），你可以根据需求调整时间频率
+    - cron: '0 0 * * *'
+  workflow_dispatch: # 手动触发
+
+jobs:
+  update-tool:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq wget gzip
+
+      - name: Get Release Information
+        id: get_release
+        run: |
+          # 获取最新的release信息
+          release_info=$(curl -s https://api.github.com/repos/MetaCubeX/mihomo/releases/latest)
+          echo "$release_info" | jq . # 输出查看可用信息
+          asset_url=$(echo "$release_info" | jq -r '.assets[] | select(.name | startswith("mihomo-linux-amd64-v") and endswith(".gz")).browser_download_url')
+          asset_name=$(echo "$release_info" | jq -r '.assets[] | select(.name | startswith("mihomo-linux-amd64-v") and endswith(".gz")).name')
+          echo "Asset URL: $asset_url"
+          echo "Asset Name: $asset_name"
+          echo "::set-output name=asset_url::$asset_url"
+          echo "::set-output name=asset_name::$asset_name"
+
+      - name: Download Asset
+        if: steps.get_release.outputs.asset_url != ''
+        run: |
+          mkdir -p tool
+          wget "${{ steps.get_release.outputs.asset_url }}" -O "tool/${{ steps.get_release.outputs.asset_name }}"
+
+      - name: Extract and Clean
+        if: steps.get_release.outputs.asset_url != ''
+        run: |
+          gunzip -f "tool/${{ steps.get_release.outputs.asset_name }}"
+          asset_base_name=$(basename "${{ steps.get_release.outputs.asset_name }}" .gz)
+          mv "tool/$asset_base_name" "tool/"
+          ls tool
+
+      - name: Commit Changes
+        if: steps.get_release.outputs.asset_url != ''
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add tool/
+          git commit -m "Update tool with latest release from MetaCubeX/mihomo"
+          git push
