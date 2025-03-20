@@ -61,10 +61,21 @@ jobs:
           done
           ls -l converted_rules/Loyalsoldier
 
+      - name: 检查 .mrs 文件是否正确生成
+        run: |
+          if [ -z "$(ls -A converted_rules/Loyalsoldier/*.mrs 2>/dev/null)" ]; then
+            echo "错误: .mrs 文件未正确生成！"
+            exit 1
+          else
+            echo "成功: .mrs 文件生成完成！"
+            ls -l converted_rules/Loyalsoldier
+          fi
+
       - name: 提交转换后的文件到仓库
         run: |
           git config --global user.email "github-actions@github.com"
           git config --global user.name "GitHub Actions"
-          git add converted_rules/Loyalsoldier/*
+          git status  # 检查变更状态
+          git add converted_rules/Loyalsoldier/* || echo "没有文件可添加"
           git commit -m "更新 Clash 规则 MRS 格式: ${{ env.LATEST_RELEASE }}" || echo "No changes to commit"
           git push origin main || echo "No changes to push"
