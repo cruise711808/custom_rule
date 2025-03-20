@@ -62,7 +62,13 @@ jobs:
           mkdir -p converted_rules/Loyalsoldier
           for file in rules/*.txt; do
             base_name=$(basename "$file" .txt)
-            mihomo convert-ruleset domain text "$file" "converted_rules/Loyalsoldier/$base_name.mrs"
+            if [[ "$base_name" =~ cidr$ ]]; then
+              # 以 'cidr' 结尾的文件使用 ipcidr 规则转换
+              mihomo convert-ruleset ipcidr text "$file" "converted_rules/Loyalsoldier/$base_name.mrs"
+            else
+              # 其他文件使用 domain 规则转换
+              mihomo convert-ruleset domain text "$file" "converted_rules/Loyalsoldier/$base_name.mrs"
+            fi
           done
           ls -l converted_rules/Loyalsoldier
 
