@@ -1,0 +1,57 @@
+name: Convert Clash Rules
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # 每小时检查一次
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  check-and-convert:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检查出发原因
+        run: echo "启动 Clash 规则转换任务"
+
+      # 1. 获取最新 Release 信息
+      - name: 获取最新 Clash Rules Release 版本
+        id: get_latest_release
+        run: |
+          LATEST_RELEASE=$(curl -s https://api.github.com/repos/Loyalsoldier/clash-rules/releases/latest | jq -r '.tag_name')
+          echo "最新版本: $LATEST_RELEASE"
+          echo "LATEST_RELEASE=$LATEST_RELEASE" >> $GITHUB_ENV
+
+      # 2. 下载 Clash Rules Release 下的所有 .txt 规则
+      - name: 下载最新的规则文件
+        run: |
+          mkdir rules
+          cd rules
+          wget -q https://raw.githubusercontent.com/Loyalsoldier/clash-rules/${{ env.LATEST_RELEASE }}/direct.txt
+          wget -q https://raw.githubusercontent.com/Loyalsoldier/clash-rules/${{ env.LATEST_RELEASE }}/proxy.txt
+          wget -q https://raw.githubusercontent.com/Loyalsoldier/clash-rules/${{ env.LATEST_RELEASE }}/reject.txt
+          wget -q https://raw.githubusercontent.com/Loyalsoldier/clash-rules/${{ env.LATEST_RELEASE }}/icloud.txt
+          wget -q https://raw.githubusercontent.com/Loyalsoldier/clash-rules/${{ env.LATEST_RELEASE }}/apple.txt
+          wget -q https://raw.githubusercontent.com/Loyalsoldier/clash-rules/${{ env.LATEST_RELEASE }}/google.txt
+          ls -l
+
+      # 3. 安装 mihomo 并转换规则
+      - name: 安装 mihomo
+        run: |
+          curl -sL https://github.com/MetaCubeX/mihomo/releases/latest/download/mihomo-linux-amd64 -o mihomo
+          chmod +x mihomo
+          mv mihomo /usr/local/bin/
+
+      - name: 转换 .txt 文件为 .mrs
+        run: |
+          mkdir converted_rules
+          for file in rules/*.txt; do
+            base_name=$(basename "$file" .txt)
+            mihomo convert-ruleset domain txt "$file" "converted_rules/$base_name.mrs"
+          done
+          ls -l converted_rules
+
+      # 4. 上传转换后的 .mrs 文件到 Release
+      - name: 发布到 Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${{ env.LATEST_RELEASE }}" converted_rules/* --title "Converted Rules ${{ env.LATEST_RELEASE }}" --notes "自动转换 Clash 规则为 MRS 格式"
