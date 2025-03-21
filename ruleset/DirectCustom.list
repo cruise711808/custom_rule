@@ -1,5 +1,4 @@
 # 自定义直连
 
-DOMAIN-SUFFIX,sharvo.top
-DOMAIN-SUFFIX,xn--ngstr-lra8j.com
-DOMAIN-SUFFIX,services.googleapis.cn
+DOMAIN,clash.razord.top
+DOMAIN,yacd.haishan.me
