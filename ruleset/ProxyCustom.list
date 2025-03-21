@@ -1,6 +1,14 @@
 # 自定义代理
 
+# google play
+DOMAIN-SUFFIX,xn--ngstr-lra8j.com
+DOMAIN-SUFFIX,services.googleapis.cn
+
+# pikpak
 DOMAIN,mypikpak.com
 DOMAIN,mypikpak.net
 DOMAIN,user.mypikpak.com
 DOMAIN,access.mypikpak.com
+
+# others
+DOMAIN-SUFFIX,qichiyu.com
