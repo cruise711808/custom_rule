@@ -13,4 +13,4 @@ DOMAIN,access.mypikpak.com
 
 # others
 DOMAIN-SUFFIX,qichiyu.com
-DOMAIN-SUFFIX,ipify.org
+DOMAIN,api.ipify.org
