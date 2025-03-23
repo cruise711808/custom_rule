@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "rules": [
+    {
+      "domain": [
+        "hcfy.ai"
+      ],
+      "domain_suffix": [],
+      "domain_regex": [
+      ]
+    }
+  ]
+}

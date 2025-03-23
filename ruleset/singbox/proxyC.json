@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "rules": [
+    {
+      "domain": [
+        "returnyoutubedislikeapi.com",
+        "mypikpak.com",
+        "mypikpak.net",
+        "user.mypikpak.com",
+        "access.mypikpak.com",
+        "gofile.io"
+      ],
+      "domain_suffix": [
+        "xn--ngstr-lra8j.com",
+        "services.googleapis.cn",
+        "ajay.app",
+        "returnyoutubedislikeapi.com",
+        "qichiyu.com",
+        "vivaldi.net"
+      ],
+      "domain_regex": []
+    }
+  ]
+}

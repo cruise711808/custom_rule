@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "rules": [
+    {
+      "domain": [
+        "api.miwifi.com"
+      ],
+      "domain_suffix": [],
+      "domain_keyword": [],
+      "domain_regex": [
+      ]
+    }
+  ]
+}
