@@ -59,33 +59,33 @@ jobs:
 
       - name: 转换 .txt 文件为 .mrs
         run: |
-          mkdir -p converted_rules/Loyalsoldier
+          mkdir -p converted/Loyalsoldier
           for file in rules/*.txt; do
             base_name=$(basename "$file" .txt)
             if [[ "$base_name" =~ cidr$ ]]; then
               # 以 'cidr' 结尾的文件使用 ipcidr 规则转换
-              mihomo convert-ruleset ipcidr yaml "$file" "converted_rules/Loyalsoldier/$base_name.mrs"
+              mihomo convert-ruleset ipcidr yaml "$file" "converted/Loyalsoldier/$base_name.mrs"
             else
               # 其他文件使用 domain 规则转换
-              mihomo convert-ruleset domain yaml "$file" "converted_rules/Loyalsoldier/$base_name.mrs"
+              mihomo convert-ruleset domain yaml "$file" "converted/Loyalsoldier/$base_name.mrs"
             fi
           done
-          ls -l converted_rules/Loyalsoldier
+          ls -l converted/Loyalsoldier
 
       - name: 检查 .mrs 文件是否正确生成
         run: |
-          if [ -z "$(ls -A converted_rules/Loyalsoldier/*.mrs 2>/dev/null)" ]; then
+          if [ -z "$(ls -A converted/Loyalsoldier/*.mrs 2>/dev/null)" ]; then
             echo "错误: .mrs 文件未正确生成！"
             exit 1
           else
             echo "成功: .mrs 文件生成完成！"
-            ls -l converted_rules/Loyalsoldier
+            ls -l converted/Loyalsoldier
           fi
 
       - name: 提交转换后的文件到仓库
         run: |
           git config --global user.email "github-actions@github.com"
           git config --global user.name "GitHub Actions"
-          git add converted_rules/Loyalsoldier/*
+          git add converted/Loyalsoldier/*
           git commit -m "更新 Clash 规则 MRS 格式: ${{ env.LATEST_RELEASE }}" || echo "No changes to commit"
           git push origin main || echo "No changes to push"
