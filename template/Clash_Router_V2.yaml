@@ -1,0 +1,197 @@
+# -- 全局配置 --
+allow-lan: true 
+bind-address: "*"
+mode: rule
+log-level: warning
+ipv6: true # 开启以支持特定域名的 IPv6 解析
+find-process-mode: off # 控制是否让 Clash 去匹配进程
+unified-delay: true 
+tcp-concurrent: true
+
+# -- 外部控制与缓存 --
+external-controller: 0.0.0.0:9090
+secret: "clash-ex"
+external-ui: "/usr/share/openclash/ui"
+external-ui-url: "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip" #从 GitHub Pages 分支获取
+profile:
+  store-selected: true
+
+# -- GEO数据 --
+geodata-mode: false # 更改 geoip 使用文件，mmdb 或者 dat，可选 true/false,true为 dat，此项有默认值 false
+geodata-loader: standard
+geo-auto-update: true
+geo-update-interval: 48
+geox-url:
+  geoip: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat"
+  geosite: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat"
+  mmdb: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/country.mmdb"
+  asn: "https://github.com/xishang0128/geoip/releases/download/latest/GeoLite2-ASN.mmdb"
+global-ua: clash.meta
+
+
+# -- 入站与 Tun --
+port: 7890
+socks-port: 7891
+mixed-port: 7892
+tun:
+  enable: true
+  stack: mixed
+  auto-route: true
+  auto-redirect: true
+  auto-detect-interface: true
+  dns-hijack: [any:53, tcp://any:53]
+  route-exclude-address-set: [base_lancidr, base_cncidr]
+
+# -- 流量嗅探 --
+sniffer:
+  enable: true
+  parse-pure-ip: true
+  sniff:
+    HTTP: { ports: [80, 8080-8880], override-destination: true }
+    TLS: { ports: [443, 8443], override-destination: true }
+    QUIC: { ports: [443, 8443], override-destination: true }
+  skip-domain:
+    - "+.sharvo.top"
+    - "Mijia Cloud"
+    - "rule-set:base_private"
+    - "rule-set:base_direct"
+
+# -- DNS 配置 (全量规则联动版) --
+dns:
+  enable: true
+  ipv6: true
+  prefer-ipv6: false
+  listen: 0.0.0.0:1053
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  
+  default-nameserver: [223.5.5.5, 119.29.29.29]
+  nameserver: [https://dns.alidns.com/dns-query, https://doh.pub/dns-query]
+  fallback:
+    - "https://8.8.8.8/dns-query#🔰 节点选择"
+    - "https://dns.google/dns-query#🔰 节点选择"
+
+  fallback-filter:
+    geoip: true
+    geoip-code: CN
+    geosite: [gfw, geolocation-!cn]
+    ipcidr: [240.0.0.0/4, 0.0.0.0/32]
+
+  # 策略分流解析：确保所有分流域名走对应的 DNS 链路
+  nameserver-policy:
+    "geosite:cn,private": [https://dns.alidns.com/dns-query, https://doh.pub/dns-query]
+    "geosite:category-ads-all": rcode://success
+    "*.sharvo.top": [223.5.5.5, 119.29.29.29] # 您的域名直连 IPv6 解析
+    # 国外全量规则集走代理 DNS
+    "rule-set:custom_proxy,app_chatgpt,app_telegram,app_youtube,app_netflix,app_bahamut,app_github,app_games,base_google,base_gfw,base_proxy":
+      - "https://8.8.8.8/dns-query#🔰 节点选择"
+
+  fake-ip-filter:
+    - "+.sharvo.top"
+    - "rule-set:base_private"
+    - "*.lan"
+    - "*.local"
+    - "music.163.com"
+
+# -- 代理提供者 --
+proxy-providers:
+  灵魂云:
+    type: http
+    url: ""
+    path: ./config/linghunyun.yaml
+    interval: 604800
+    health-check: { enable: true, url: https://www.gstatic.com/generate_204, interval: 1200 }
+    override: { udp: true }
+
+# -- 策略组 --
+proxy-groups:
+  - { name: 🔰 节点选择, type: select, proxies: [🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇺🇲 美国节点, 🫰 手动切换] }
+  - { name: 🤖 GPT服务, type: select, proxies: [🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇲 美国节点, 🫰 手动切换] }
+  - { name: 📲 电报消息, type: select, proxies: [🔰 节点选择, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇲 美国节点, 🫰 手动切换, ♻️ 全局直连] }
+  - { name: 📹 油管视频, type: select, proxies: [🔰 节点选择, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇲 美国节点, 🫰 手动切换, ♻️ 全局直连] }
+  - { name: 🎥 奈飞视频, type: select, proxies: [🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇲 美国节点, 🫰 手动切换, ♻️ 全局直连] }
+  - { name: 📺 巴哈姆特, type: select, proxies: [🇹🇼 台湾节点, 🫰 手动切换, ♻️ 全局直连] }
+  - { name: 📺 哔哩哔哩, type: select, proxies: [♻️ 全局直连, 🇹🇼 台湾节点, 🇭🇰 香港节点] }
+  - { name: 🐱 GITHUB, type: select, proxies: [🔰 节点选择, ♻️ 全局直连, 🫰 手动切换] }
+  - { name: 🔎 谷歌应用, type: select, proxies: [🔰 节点选择, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇲 美国节点, 🫰 手动切换] }
+  - { name: 🎮 游戏平台, type: select, proxies: [🔰 节点选择, ♻️ 全局直连, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇲 美国节点, 🫰 手动切换] }
+  - { name: ⬇️ 下载服务, type: select, proxies: [🔰 节点选择, ♻️ 全局直连] }
+  - { name: ♻️ 全局直连, type: select, proxies: [DIRECT, 🔰 节点选择] }
+  - { name: 🛑 广告拦截, type: select, proxies: [REJECT, DIRECT] }
+  - { name: 🛡️ 隐私防护, type: select, proxies: [REJECT, DIRECT] }
+  - { name: 🎯 漏网之鱼, type: select, proxies: [🔰 节点选择, ♻️ 全局直连, 🫰 手动切换] }
+  
+  - { name: 🫰 手动切换, type: select, include-all: true, filter: "(^(?!.*(重置|流量|到期)).*)" }
+  - { name: 🇭🇰 香港节点, type: select, include-all: true, filter: "(香港|HK)" }
+  - { name: 🇹🇼 台湾节点, type: select, include-all: true, filter: "(台|TW)" }
+  - { name: 🇯🇵 日本节点, type: select, include-all: true, filter: "(日本|JP)" }
+  - { name: 🇰🇷 韩国节点, type: select, include-all: true, filter: "(KR|Korea)" }
+  - { name: 🇸🇬 新加坡节点, type: select, include-all: true, filter: "(新加坡|SG)" }
+  - { name: 🇺🇲 美国节点, type: select, include-all: true, filter: "(美|US)" }
+
+# -- 规则匹配 (全量恢复) --
+rules:
+  - DOMAIN-SUFFIX, sharvo.top, ♻️ 全局直连
+  - DOMAIN, hcfy.ai, ♻️ 全局直连
+  
+  - RULE-SET, custom_direct, ♻️ 全局直连
+  - RULE-SET, custom_download, ⬇️ 下载服务
+  - RULE-SET, custom_proxy, 🔰 节点选择
+  - RULE-SET, custom_reject, REJECT
+  - RULE-SET, base_private, ♻️ 全局直连
+  - RULE-SET, app_chatgpt, 🤖 GPT服务
+  - RULE-SET, base_telegramcidr, 📲 电报消息,no-resolve
+  - RULE-SET, app_telegram, 📲 电报消息
+  - RULE-SET, app_telegram_ip, 📲 电报消息,no-resolve
+  - RULE-SET, app_youtube, 📹 油管视频
+  - RULE-SET, app_netflix, 🎥 奈飞视频
+  - RULE-SET, app_netflix_ip, 🎥 奈飞视频,no-resolve
+  - RULE-SET, app_bahamut, 📺 巴哈姆特
+  - RULE-SET, app_bilibili, 📺 哔哩哔哩
+  - RULE-SET, app_github, 🐱 GITHUB
+  - RULE-SET, base_google, 🔎 谷歌应用
+  - RULE-SET, app_games, 🎮 游戏平台
+  - RULE-SET, app_steam@cn, ♻️ 全局直连
+  - RULE-SET, app_games@cn, ♻️ 全局直连
+  - RULE-SET, app_tracker, 🛡️ 隐私防护
+  - RULE-SET, base_reject, 🛑 广告拦截
+  - RULE-SET, base_gfw, 🔰 节点选择
+  - RULE-SET, base_proxy, 🔰 节点选择
+  - RULE-SET, base_direct, ♻️ 全局直连
+  - RULE-SET, base_lancidr, ♻️ 全局直连,no-resolve
+  - RULE-SET, base_cncidr, ♻️ 全局直连,no-resolve
+  
+  - GEOIP, LAN, DIRECT, no-resolve
+  - GEOIP, CN, DIRECT, no-resolve
+  - MATCH, 🎯 漏网之鱼
+
+# -- 规则提供者 (全量 Mrs/Text) --
+rule-providers:
+  custom_direct: { type: http, interval: 86400, behavior: domain, format: text, url: "https://cdn.jsdelivr.net/gh/cruise711808/custom_rule@main/ruleset/clash/direct.list", path: ./providers/Custom/Direct.list }
+  custom_download: { type: http, interval: 86400, behavior: domain, format: text, url: "https://cdn.jsdelivr.net/gh/cruise711808/custom_rule@main/ruleset/clash/download.list", path: ./providers/Custom/Download.list }
+  custom_proxy: { type: http, interval: 86400, behavior: domain, format: text, url: "https://cdn.jsdelivr.net/gh/cruise711808/custom_rule@main/ruleset/clash/proxy.list", path: ./providers/Custom/Proxy.list }
+  custom_reject: { type: http, interval: 86400, behavior: domain, format: text, url: "https://cdn.jsdelivr.net/gh/cruise711808/custom_rule@main/ruleset/clash/reject.list", path: ./providers/Custom/Reject.list }
+
+  base_reject: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://cdn.jsdelivr.net/gh/cruise711808/custom_rule@main/converted/Loyalsoldier/reject.mrs", path: ./providers/Loyalsoldier/reject.mrs }
+  base_google: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://cdn.jsdelivr.net/gh/cruise711808/custom_rule@main/converted/Loyalsoldier/google.mrs", path: ./providers/Loyalsoldier/google.mrs }
+  base_proxy: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://cdn.jsdelivr.net/gh/cruise711808/custom_rule@main/converted/Loyalsoldier/proxy.mrs", path: ./providers/Loyalsoldier/proxy.mrs }
+  base_direct: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://cdn.jsdelivr.net/gh/cruise711808/custom_rule@main/converted/Loyalsoldier/direct.mrs", path: ./providers/Loyalsoldier/direct.mrs }
+  base_private: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://cdn.jsdelivr.net/gh/cruise711808/custom_rule@main/converted/Loyalsoldier/private.mrs", path: ./providers/Loyalsoldier/private.mrs }
+  base_gfw: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://cdn.jsdelivr.net/gh/cruise711808/custom_rule@main/converted/Loyalsoldier/gfw.mrs", path: ./providers/Loyalsoldier/gfw.mrs }
+  base_telegramcidr: { type: http, interval: 86400, behavior: ipcidr, format: mrs, url: "https://cdn.jsdelivr.net/gh/cruise711808/custom_rule@main/converted/Loyalsoldier/telegramcidr.mrs", path: ./providers/Loyalsoldier/telegramcidr.mrs }
+  base_cncidr: { type: http, interval: 86400, behavior: ipcidr, format: mrs, url: "https://cdn.jsdelivr.net/gh/cruise711808/custom_rule@main/converted/Loyalsoldier/cncidr.mrs", path: ./providers/Loyalsoldier/cncidr.mrs }
+  base_lancidr: { type: http, interval: 86400, behavior: ipcidr, format: mrs, url: "https://cdn.jsdelivr.net/gh/cruise711808/custom_rule@main/converted/Loyalsoldier/lancidr.mrs", path: ./providers/Loyalsoldier/lancidr.mrs }
+
+  app_tracker: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-public-tracker.mrs", path: ./providers/Application/category-public-tracker.mrs }
+  app_chatgpt: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-ai-chat-!cn.mrs", path: ./providers/Application/category-ai-chat-!cn.mrs }
+  app_youtube: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/youtube.mrs", path: ./providers/Application/youtube.mrs }
+  app_github: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/github.mrs", path: ./providers/Application/github.mrs }
+  app_telegram: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.mrs", path: ./providers/Application/telegram.mrs }
+  app_netflix: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/netflix.mrs", path: ./providers/Application/netflix.mrs }
+  app_telegram_ip: { type: http, interval: 86400, behavior: ipcidr, format: mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs", path: ./providers/Application/telegram_ip.mrs }
+  app_netflix_ip: { type: http, interval: 86400, behavior: ipcidr, format: mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/netflix.mrs", path: ./providers/Application/netflix_ip.mrs }
+  app_bahamut: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/bahamut.mrs", path: ./providers/Application/bahamut.mrs }
+  app_bilibili: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/bilibili.mrs", path: ./providers/Application/bilibili.mrs }
+  app_games: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-games.mrs", path: ./providers/Application/category-games.mrs }
+  app_steam@cn: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/steam@cn.mrs", path: ./providers/Application/steam@cn.mrs }
+  app_games@cn: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-games@cn.mrs", path: ./providers/Application/category-games@cn.mrs }
