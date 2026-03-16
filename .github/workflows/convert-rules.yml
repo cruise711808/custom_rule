@@ -1,14 +1,14 @@
 name: Convert Clash Rules
 
-on:
-  schedule:
-    - cron: '0 0 * * *'  # 每天 00:00 UTC（北京时间 08:00）触发
-  workflow_dispatch:  # 允许手动触发
+# on:
+#   schedule:
+#     - cron: '0 0 * * *'  # 每天 00:00 UTC（北京时间 08:00）触发
+#   workflow_dispatch:  # 允许手动触发
 
 permissions:
   contents: write  # 赋予 GITHUB_TOKEN 写入权限
 
-jobs:
+# jobs:
   check-and-convert:
     runs-on: ubuntu-latest
     steps:
