@@ -90,7 +90,7 @@ dns:
 proxy-providers:
   灵魂云:
     type: http
-    url: "https://submit.xz61.cn:21443/api/v1/client/subscribe?token=7e9c82c749d3e103eff8f8bba28267d0"
+    url: ""
     path: ./config/linghunyun.yaml
     interval: 604800
     health-check: { enable: true, url: https://www.gstatic.com/generate_204, interval: 1200 }
