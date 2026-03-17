@@ -12,14 +12,6 @@
 
 
 
-## TCP
-
-| 厂商   | 类型 | 地址1   | 地址2 |
-| ------ | ---- | ------- | ----- |
-| 腾讯云 | IPv4 | dot.pub |       |
-|        |      |         |       |
-|        |      |         |       |
-
 ## DNS over TLS
 
 | 厂商   | 类型 | 地址1          | 地址2             |
@@ -74,13 +66,7 @@
 | TWNIC      | IPv4 | 101.101.101.101      | 101.102.103.104      |
 | TWNIC      | IPv6 | 2001:de4::101        | 2001:de4::102        |
 
-## TCP
 
-| 厂商 | 类型 | 地址1 | 地址2 |
-| ---- | ---- | ----- | ----- |
-|      |      |       |       |
-|      |      |       |       |
-|      |      |       |       |
 
 ## DNS over TLS
 
@@ -96,6 +82,8 @@
 | HiNet      | IPv4 |                            |                                  |
 | TWNIC      | IPv4 | 101.101.101.101            | dns.twnic.tw                     |
 
+
+
 ## DNS over HTTPS
 
 | 厂商       | 类型 | 地址1                                | 地址2                     |
@@ -108,6 +96,8 @@
 | AdGuard    | IPv4 | unfiltered.adguard-dns.com/dns-query |                           |
 | HiNet      | IPv4 | dns.hinet.net/dns-query              |                           |
 | TWNIC      | IPv4 | dns.twnic.tw/dns-query               |                           |
+
+
 
 ## DNS over QUIC
 

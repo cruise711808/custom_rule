@@ -8,45 +8,99 @@ dns:
   listen: ':1053'
   ipv6: true
   default-nameserver: # 默认 DNS, 用于解析 DNS 服务器 的域名
-    - '223.6.6.6'
-    - '119.28.28.28'
-    - '22400:3200::1'
-    - '2402:4e00::'
+    - tls://223.5.5.5:853
+    - tls://2400:3200::1:853
+    - tls://101.101.101.101:853
   enhanced-mode: 'redir-host'
   nameserver-policy: # 指定域名查询的解析服务器，可使用 geosite, 优先于 nameserver/fallback 查询
-    "geosite:cn,private": [https://dns.alidns.com/dns-query, https://doh.pub/dns-query]
+    "geosite:cn": &cn_dns
+      - 223.6.6.6
+      - 119.28.28.28
+      - 114.114.114.114
+    "geosite:geolocation-!cn": &os_dns
+      - https://doh.opendns.com/dns-query
+      - https://dns.google/dns-query
+      - https://cloudflare-dns.com/dns-query
+    "geosite:category-companies": *os_dns
+    "geosite:category-porn": *os_dns
+    "geosite:gfw": *os_dns
+    "geosite:geolocation-cn": *cn_dns
+    "geosite:category-entertainment": *os_dns  
+    "geosite:category-media": *os_dns
+    "geosite:google": *os_dns
+    "geosite:category-ecommerce": *os_dns
+    "geosite:category-games": *os_dns
+    "geosite:category-companies@cn": *cn_dns
+    "geosite:category-games-!cn": *os_dns
+    "geosite:microsoft": *os_dns
+    "geosite:category-game-platforms-download": *os_dns
+    "geosite:category-entertainment-cn": *cn_dns
+    "geosite:category-social-media-!cn": *os_dns
+    "geosite:tencent": *cn_dns
+    "geosite:category-dev": *os_dns
+    "geosite:tld-!cn": *os_dns
+    "geosite:category-media-cn": *cn_dns
+    "geosite:category-games-cn": *cn_dns
+    "geosite:category-cdn-!cn": *os_dns
+    "geosite:microsoft@cn": *cn_dns
+    "geosite:google@cn": *cn_dns
+    "geosite:category-ai-chat-!cn": *os_dns
+    "geosite:category-ai-!cn": *os_dns
+    "geosite:category-cdn-cn": *cn_dns
+    "geosite:private": *cn_dns   
     "geosite:category-ads-all": rcode://success
-    "*.sharvo.top": [223.5.5.5, 119.29.29.29] # 您的域名直连 IPv6 解析
-    # 国外全量规则集走代理 DNS
-    "rule-set:custom_proxy,app_chatgpt,app_telegram,app_youtube,app_netflix,app_bahamut,app_github,app_games,base_google,base_gfw,base_proxy":
-      - "https://8.8.8.8/dns-query#🔰 节点选择"
-    '+.arpa': '10.0.0.1'
-    'rule-set:cn':
-    - https://doh.pub/dns-query
-    - https://dns.alidns.com/dns-query
+    "geosite:category-ads-all@ads": rcode://success
+    "geosite:category-ads@ads": rcode://success
+    "geosite:win-spy": rcode://success
+    "geosite:category-public-tracker": rcode://success
+    "*.sharvo.top": [223.5.5.5, 2400:3200::1] # 您的域名直连 IPv6 解析
   nameserver: # 默认的域名解析服务器
-    - 'tls://dns.alidns.com'
-    - 'tls://dot.pub'
-    - 'https://dns.alidns.com/dns-query'
-  fallback: [] # 后备域名解析服务器，一般情况下使用境外 DNS, 保证结果可信
+    - tls://dns.alidns.com
+    - tls://dot.pub
+  fallback: # 后备域名解析服务器，一般情况下使用境外 DNS, 保证结果可信
+    - https://doh.opendns.com/dns-query
+    - https://dns.google/dns-query
+    - https://cloudflare-dns.com/dns-query
   proxy-server-nameserver:
-    - 'https://doh.pub/dns-query'
-    - 'https://dns.alidns.com/dns-query'
-    - 'tls://223.5.5.5'
-  proxy-server-nameserver-policy:
-    'www.yournode.com': '114.114.114.114'
-  direct-nameserver: [] # 用于 direct 出口域名解析的 DNS 服务器，如果不填则遵循 nameserver-policy、nameserver 和 fallback 的配置
+    - tls://dns.alidns.com
+    - tls://dot.pub
+    - tls://223.5.5.5
+  direct-nameserver: # 用于 direct 出口域名解析的 DNS 服务器，如果不填则遵循 nameserver-policy、nameserver 和 fallback 的配置
+    - 223.6.6.6
+    - 119.28.28.28
   direct-nameserver-follow-policy: false # 是否遵循 nameserver-policy，默认为不遵守，仅当 direct-nameserver 不为空时生效
   fallback-filter: # 后备域名解析服务器筛选，满足条件的将使用 fallback结果或只使用 fallback解析
     geoip: true
-    geoip-code: 'CN'
+    geoip-code: CN
     ipcidr:
-      - '240.0.0.0/4'
-      - '0.0.0.0/32'
+    - ::/128
+    - ::1/128
+    - 2001::/32
+    - 0.0.0.0/8
+    - 10.0.0.0/8
+    - 100.64.0.0/10
+    - 127.0.0.0/8
+    - 169.254.0.0/16
+    - 172.16.0.0/12
+    - 192.0.0.0/24
+    - 192.0.2.0/24
+    - 192.88.99.0/24
+    - 192.168.0.0/16
+    - 198.18.0.0/15
+    - 198.51.100.0/24
+    - 203.0.113.0/24
+    - 224.0.0.0/4
+    - 240.0.0.0/4
+    - 255.255.255.255/32
     domain:
-      - '+.google.com'
-      - '+.facebook.com'
-      - '+.youtube.com'
+    - "+.google.com"
+    - "+.facebook.com"
+    - "+.youtube.com"
+    - "+.github.com"
+    - "+.githubusercontent.com"
+    - "+.googlevideo.com"
+    - "+.msftconnecttest.com"
+    - "+.msftncsi.com"
 
 
 
