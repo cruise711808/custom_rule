@@ -8,11 +8,10 @@ dns:
   listen: ':1053'
   ipv6: true
   default-nameserver: # 默认 DNS, 用于解析 DNS 服务器 的域名
-    - 'system'
     - '223.6.6.6'
-    - '8.8.8.8'
-    - '2400:3200::1'
-    - '2001:4860:4860::8888'
+    - '119.28.28.28'
+    - '22400:3200::1'
+    - '2402:4e00::'
   enhanced-mode: 'redir-host'
   nameserver-policy: # 指定域名查询的解析服务器，可使用 geosite, 优先于 nameserver/fallback 查询
     '+.arpa': '10.0.0.1'
@@ -20,8 +19,8 @@ dns:
     - https://doh.pub/dns-query
     - https://dns.alidns.com/dns-query
   nameserver: # 默认的域名解析服务器
-    - '8.8.8.8'
-    - 'https://doh.pub/dns-query'
+    - 'tls://dns.alidns.com'
+    - 'tls://dot.pub'
     - 'https://dns.alidns.com/dns-query'
   fallback: [] # 后备域名解析服务器，一般情况下使用境外 DNS, 保证结果可信
   proxy-server-nameserver:
@@ -30,8 +29,8 @@ dns:
     - 'tls://223.5.5.5'
   proxy-server-nameserver-policy:
     'www.yournode.com': '114.114.114.114'
-  direct-nameserver: []
-  direct-nameserver-follow-policy: false
+  direct-nameserver: [] # 用于 direct 出口域名解析的 DNS 服务器，如果不填则遵循 nameserver-policy、nameserver 和 fallback 的配置
+  direct-nameserver-follow-policy: false # 是否遵循 nameserver-policy，默认为不遵守，仅当 direct-nameserver 不为空时生效
   fallback-filter: # 后备域名解析服务器筛选，满足条件的将使用 fallback结果或只使用 fallback解析
     geoip: true
     geoip-code: 'CN'
