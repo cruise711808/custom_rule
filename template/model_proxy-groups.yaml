@@ -1,0 +1,28 @@
+proxy-groups:
+- name: "proxy"
+  type: select
+  proxies:
+  - DIRECT
+  - ss
+  use:
+  - provider1
+  - provider1
+
+  url: 'https://www.gstatic.com/generate_204'
+  interval: 300
+  lazy: true
+  timeout: 5000
+  max-failed-times: 5
+
+  disable-udp: true
+  interface-name: en0
+  routing-mark: 11451
+  include-all: false
+  include-all-proxies: false
+  include-all-providers: false
+  filter: "(?i)港|hk|hongkong|hong kong"
+  exclude-filter: "美|日"
+  exclude-type: "Shadowsocks|Http"
+  expected-status: 204
+  hidden: true
+  icon: xxx
