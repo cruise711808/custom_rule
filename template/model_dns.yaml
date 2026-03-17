@@ -1,0 +1,47 @@
+dns:
+  enable: true
+  cache-algorithm: arc
+  prefer-h3: true
+  use-hosts: true
+  use-system-hosts: true
+  respect-rules: false # dns 连接遵守路由规则，需配置 proxy-server-nameserver | 强烈不建议和 prefer-h3 一起使用
+  listen: ':1053'
+  ipv6: true
+  default-nameserver: # 默认 DNS, 用于解析 DNS 服务器 的域名
+    - 'system'
+    - '223.6.6.6'
+    - '8.8.8.8'
+    - '2400:3200::1'
+    - '2001:4860:4860::8888'
+  enhanced-mode: 'redir-host'
+  nameserver-policy: # 指定域名查询的解析服务器，可使用 geosite, 优先于 nameserver/fallback 查询
+    '+.arpa': '10.0.0.1'
+    'rule-set:cn':
+    - https://doh.pub/dns-query
+    - https://dns.alidns.com/dns-query
+  nameserver: # 默认的域名解析服务器
+    - '8.8.8.8'
+    - 'https://doh.pub/dns-query'
+    - 'https://dns.alidns.com/dns-query'
+  fallback: [] # 后备域名解析服务器，一般情况下使用境外 DNS, 保证结果可信
+  proxy-server-nameserver:
+    - 'https://doh.pub/dns-query'
+    - 'https://dns.alidns.com/dns-query'
+    - 'tls://223.5.5.5'
+  proxy-server-nameserver-policy:
+    'www.yournode.com': '114.114.114.114'
+  direct-nameserver: []
+  direct-nameserver-follow-policy: false
+  fallback-filter: # 后备域名解析服务器筛选，满足条件的将使用 fallback结果或只使用 fallback解析
+    geoip: true
+    geoip-code: 'CN'
+    ipcidr:
+      - '240.0.0.0/4'
+      - '0.0.0.0/32'
+    domain:
+      - '+.google.com'
+      - '+.facebook.com'
+      - '+.youtube.com'
+
+
+
