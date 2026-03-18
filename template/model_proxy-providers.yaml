@@ -21,3 +21,26 @@ proxy-providers:
       skip-cert-verify: true
       ip-version: ipv4-prefer
       additional-prefix: "provider1 prefix |"
+  
+  provider2:
+    type: http
+    url: "http://test.com"
+    interval: 604800
+    proxy: DIRECT
+    size-limit: 0
+    header:
+      User-Agent:
+      - "mihomo/1.18.3"
+      Authorization:
+      - 'token 1231231'
+    health-check:
+      enable: true
+      url: https://cp.cloudflare.com
+      interval: 86400
+      timeout: 5000
+      lazy: true
+      expected-status: 204
+    override:
+      skip-cert-verify: true
+      ip-version: ipv4-prefer
+      additional-prefix: "provider1 prefix |"
