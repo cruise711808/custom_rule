@@ -26,3 +26,120 @@ proxy-groups:
   expected-status: 204
   hidden: true
   icon: xxx
+
+- { name: 🔰 节点选择, type: select, proxies: [🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇺🇲 美国节点, 🫰 手动切换] }
+- { name: 🤖 GPT服务, type: select, proxies: [🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇲 美国节点, 🫰 手动切换] }
+- { name: 📲 电报消息, type: select, proxies: [🔰 节点选择, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇲 美国节点, 🫰 手动切换, ♻️ 全局直连] }
+- { name: 📹 油管视频, type: select, proxies: [🔰 节点选择, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇲 美国节点, 🫰 手动切换, ♻️ 全局直连] }
+- { name: 🎥 奈飞视频, type: select, proxies: [🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇲 美国节点, 🫰 手动切换, ♻️ 全局直连] }
+- { name: 📺 巴哈姆特, type: select, proxies: [🇹🇼 台湾节点, 🫰 手动切换, ♻️ 全局直连] }
+- { name: 📺 哔哩哔哩, type: select, proxies: [♻️ 全局直连, 🇹🇼 台湾节点, 🇭🇰 香港节点] }
+- { name: 🐱 GITHUB, type: select, proxies: [🔰 节点选择, ♻️ 全局直连, 🫰 手动切换] }
+- { name: 🔎 谷歌应用, type: select, proxies: [🔰 节点选择, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇲 美国节点, 🫰 手动切换] }
+- { name: 🎮 游戏平台, type: select, proxies: [🔰 节点选择, ♻️ 全局直连, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇲 美国节点, 🫰 手动切换] }
+- { name: ⬇️ 下载服务, type: select, proxies: [🔰 节点选择, ♻️ 全局直连] }
+- { name: ♻️ 全局直连, type: select, proxies: [DIRECT, 🔰 节点选择] }
+- { name: 🛑 广告拦截, type: select, proxies: [REJECT, DIRECT] }
+- { name: 🛡️ 隐私防护, type: select, proxies: [REJECT, DIRECT] }
+- { name: 🎯 漏网之鱼, type: select, proxies: [🔰 节点选择, ♻️ 全局直连, 🫰 手动切换] }
+
+- { name: 🫰 手动切换, type: select, include-all: true, filter: "(^(?!.*(重置|流量|到期)).*)" }
+- { name: 🇭🇰 香港节点, type: select, include-all: true, filter: "(香港|HK)" }
+- { name: 🇹🇼 台湾节点, type: select, include-all: true, filter: "(台|TW)" }
+- { name: 🇯🇵 日本节点, type: select, include-all: true, filter: "(日本|JP)" }
+- { name: 🇰🇷 韩国节点, type: select, include-all: true, filter: "(KR|Korea)" }
+- { name: 🇸🇬 新加坡节点, type: select, include-all: true, filter: "(新加坡|SG)" }
+- { name: 🇺🇲 美国节点, type: select, include-all: true, filter: "(美|US)" }
+
+- name: "🇭🇰 香港主集群"
+  type: url-test
+  use: [provider1]
+  url: https://cp.cloudflare.com
+  interval: 500
+  lazy: true
+  tolerance: 30
+  timeout: 3000
+  max-failed-times: 3
+  filter: "香港|HK"
+  exclude-filter: "高级"
+
+- name: "🇭🇰 香港副集群"
+  type: url-test
+  use: [provider1]
+  url: https://cp.cloudflare.com
+  interval: 500
+  lazy: true
+  tolerance: 30
+  timeout: 3000
+  max-failed-times: 3
+  filter: "^(?=.*(?i)(港|hk|hongkong|hong kong))(?=.*高级).*$"
+
+- name: "🇭🇰 香港备集群"
+  type: url-test
+  use: [provider2]
+  url: https://cp.cloudflare.com
+  interval: 500
+  lazy: true
+  tolerance: 30
+  timeout: 3000
+  max-failed-times: 3
+  filter: "香港|HK"
+  exclude-filter: "低倍率"
+
+- name: "🇭🇰 香港节点"
+  type: fallback
+  proxies:
+  - "🇭🇰 香港主集群"
+  - "🇭🇰 香港副集群"
+  - "🇭🇰 香港备集群"
+  url: https://cp.cloudflare.com
+  interval: 300
+  lazy: true
+  timeout: 3000
+  max-failed-times: 2
+
+- name: "🇹🇼 台湾主集群"
+  type: url-test
+  use: [provider1]
+  url: https://cp.cloudflare.com
+  interval: 500
+  lazy: true
+  tolerance: 30
+  timeout: 3000
+  max-failed-times: 3
+  filter: "台|TW"
+
+- name: "🇹🇼 台湾副集群"
+  type: url-test
+  use: [provider1]
+  url: https://cp.cloudflare.com
+  interval: 500
+  lazy: true
+  tolerance: 30
+  timeout: 3000
+  max-failed-times: 3
+  filter: "^(?=.*(?i)(台|TW))(?=.*高级).*$"
+
+- name: "🇹🇼 台湾备集群"
+  type: url-test
+  use: [provider2]
+  url: https://cp.cloudflare.com
+  interval: 500
+  lazy: true
+  tolerance: 30
+  timeout: 3000
+  max-failed-times: 3
+  filter: "台|TW"
+  exclude-filter: "低倍率"
+
+- name: "🇹🇼 台湾节点"
+  type: fallback
+  proxies:
+  - "🇹🇼 台湾主集群"
+  - "🇹🇼 台湾副集群"
+  - "🇹🇼 台湾备集群"
+  url: https://cp.cloudflare.com
+  interval: 300
+  lazy: true
+  timeout: 3000
+  max-failed-times: 2

@@ -2,7 +2,7 @@ proxy-providers:
   provider1:
     type: http
     url: "http://test.com"
-    interval: 259200
+    interval: 604800
     proxy: DIRECT
     size-limit: 0
     header:
@@ -13,34 +13,11 @@ proxy-providers:
     health-check:
       enable: true
       url: https://cp.cloudflare.com
-      interval: 300
+      interval: 86400
       timeout: 5000
       lazy: true
       expected-status: 204
     override:
-      tfo: false
-      mptcp: false
-      udp: true
-      udp-over-tcp: false
-      down: "50 Mbps"
-      up: "10 Mbps"
       skip-cert-verify: true
-      dialer-proxy: proxy
-      interface-name: tailscale0
-      routing-mark: 233
       ip-version: ipv4-prefer
       additional-prefix: "provider1 prefix |"
-      additional-suffix: "| provider1 suffix"
-      proxy-name:
-      - pattern: "IPLC-(.*?)倍"
-        target: "iplc x $1"
-    filter: "(?i)港|hk|hongkong|hong kong"
-    exclude-filter: "xxx"
-    exclude-type: "ss|http"
-    payload:
-      - name: "ss1"
-        type: ss
-        server: server
-        port: 443
-        cipher: chacha20-ietf-poly1305
-        password: "password"
