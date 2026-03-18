@@ -1,52 +1,152 @@
 rules:
-- DOMAIN,ad.com,REJECT
-- DOMAIN-SUFFIX,google.com,auto
-- DOMAIN-KEYWORD,google,auto
-- DOMAIN-WILDCARD,*.google.com,auto
-- DOMAIN-REGEX,^abc.*com,PROXY
-- GEOSITE,youtube,PROXY
+  # Reject - Ads
+  - DOMAIN, api.miwifi.com, REJECT
+  # Direct - Custom
+  - DOMAIN-SUFFIX, sharvo.top, ♻️ 全局直连
+  - DOMAIN, hcfy.ai, ♻️ 全局直连
+  - DOMAIN-REGEX, ^file.*\.gofile\.io$, ♻️ 全局直连
+  # Direct - BT
+  - DOMAIN-KEYWORD, aria2, ♻️ 全局直连
+  - DOMAIN-KEYWORD, torrent, ♻️ 全局直连
+  - DOMAIN-KEYWORD, announce.php?passkey=, ♻️ 全局直连
+  - DOMAIN-KEYWORD, tracker, ♻️ 全局直连
+  - DOMAIN-KEYWORD, BitTorrent, ♻️ 全局直连
+  - DOMAIN-KEYWORD, bt_key, ♻️ 全局直连
+  - DOMAIN-KEYWORD, ed2k, ♻️ 全局直连
+  - DOMAIN-KEYWORD, find_node, ♻️ 全局直连
+  - DOMAIN-KEYWORD, get_peers, ♻️ 全局直连
+  - DOMAIN-KEYWORD, info_hash, ♻️ 全局直连
+  - DOMAIN-KEYWORD, magnet:, ♻️ 全局直连
+  - DOMAIN-KEYWORD, peer_id=, ♻️ 全局直连
+  # Direct - XunLei
+  - DOMAIN-KEYWORD, xunlei, ♻️ 全局直连
+  - DOMAIN-KEYWORD, sandai, ♻️ 全局直连
+  - DOMAIN-KEYWORD, Thunder, ♻️ 全局直连
+  - DOMAIN-KEYWORD, XLLiveUD, ♻️ 全局直连
 
-- IP-CIDR,127.0.0.0/8,DIRECT,no-resolve
-- IP-CIDR6,2620:0:2d0:200::7/32,auto
-- IP-SUFFIX,8.8.8.8/24,PROXY
-- IP-ASN,13335,DIRECT
-- GEOIP,CN,DIRECT
+  # Download - Netdisk
+  - DOMAIN, api-drive.mypikpak.com, ⬇️ 下载节点
+  - DOMAIN-KEYWORD, dl-a10b-, ⬇️ 下载节点
+  - DOMAIN, mega.nz, ⬇️ 下载节点
+  # Download - Game
+  - DOMAIN, ssl-lvlt.cdn.ea.com, ⬇️ 下载节点
+  - DOMAIN, origin-a.akamaihd.net, ⬇️ 下载节点
+  - DOMAIN, uplaypc-s-ubisoft.cdn.ubionline.com.cn, ⬇️ 下载节点
+  - DOMAIN, gamedownloads-rockstargames-com.akamaized.net, ⬇️ 下载节点
+  - DOMAIN, gog-cdn-lumen.secure2.footprint.net, ⬇️ 下载节点
+  - DOMAIN, download.cdp.bethesda.net, ⬇️ 下载节点
+  - DOMAIN, download.hikarifield.co.jp, ⬇️ 下载节点
+  - DOMAIN, client.hikarifield.co.jp, ⬇️ 下载节点
+  - DOMAIN, download.epicgames.com, ⬇️ 下载节点
+  - DOMAIN, download2.epicgames.com, ⬇️ 下载节点
+  - DOMAIN, download3.epicgames.com, ⬇️ 下载节点
+  - DOMAIN, download4.epicgames.com, ⬇️ 下载节点
+  - DOMAIN, epicgames-download1.akamaized.net, ⬇️ 下载节点
+  - DOMAIN, packagespc.xboxlive.com, ⬇️ 下载节点
+  - DOMAIN, xvcf1.xboxlive.com, ⬇️ 下载节点
+  - DOMAIN, xvcf2.xboxlive.com, ⬇️ 下载节点
+  - DOMAIN, assets1.xboxlive.com, ⬇️ 下载节点
+  - DOMAIN, assets2.xboxlive.com, ⬇️ 下载节点
+  - DOMAIN-SUFFIX, dyn.riotcdn.net, ⬇️ 下载节点
+  - DOMAIN-SUFFIX, cdn.ubi.com, ⬇️ 下载节点
 
-- SRC-GEOIP,cn,DIRECT
-- SRC-IP-ASN,9808,DIRECT
-- SRC-IP-CIDR,192.168.1.201/32,DIRECT
-- SRC-IP-SUFFIX,192.168.1.201/8,DIRECT
 
-- DST-PORT,80,DIRECT
-- SRC-PORT,7777,DIRECT
+  # Proxy - google play
+  - DOMAIN-SUFFIX, xn--ngstr-lra8j.com, 🔰 节点选择
+  - DOMAIN-SUFFIX, services.googleapis.cn, 🔰 节点选择
+  - DOMAIN-SUFFIX, ajay.app, 🔰 节点选择
+  - DOMAIN, returnyoutubedislikeapi.com, 🔰 节点选择
+  # Proxy - pikpak
+  - DOMAIN, mypikpak.com, 🔰 节点选择
+  - DOMAIN, mypikpak.net, 🔰 节点选择
+  - DOMAIN, user.mypikpak.com, 🔰 节点选择
+  - DOMAIN, access.mypikpak.com, 🔰 节点选择
+  - DOMAIN, gofile.io, 🔰 节点选择
+  # Proxy - others
+  - DOMAIN-SUFFIX, qichiyu.com, 🔰 节点选择
+  - DOMAIN-SUFFIX, vivaldi.net, 🔰 节点选择
+  - DOMAIN-SUFFIX, f95zone.to, 🔰 节点选择
 
-- IN-PORT,7890,PROXY
-- IN-TYPE,SOCKS/HTTP,PROXY
-- IN-USER,mihomo,PROXY
-- IN-NAME,ss,PROXY
+  # GEOSITE
+  
+  - RULE-SET, base_private, ♻️ 全局直连
+  - RULE-SET, app_chatgpt, 🤖 GPT服务
+  - RULE-SET, base_telegramcidr, 📲 电报消息,no-resolve
+  - RULE-SET, app_telegram, 📲 电报消息
+  - RULE-SET, app_telegram_ip, 📲 电报消息,no-resolve
+  - RULE-SET, app_youtube, 📹 油管视频
+  - RULE-SET, app_netflix, 🎥 奈飞视频
+  - RULE-SET, app_netflix_ip, 🎥 奈飞视频,no-resolve
+  - RULE-SET, app_bahamut, 📺 巴哈姆特
+  - RULE-SET, app_bilibili, 📺 哔哩哔哩
+  - RULE-SET, app_github, 🐱 GITHUB
+  - RULE-SET, base_google, 🔎 谷歌应用
+  - RULE-SET, app_games, 🎮 游戏平台
+  - RULE-SET, app_steam@cn, ♻️ 全局直连
+  - RULE-SET, app_games@cn, ♻️ 全局直连
+  - RULE-SET, app_tracker, 🛡️ 隐私防护
+  - RULE-SET, base_reject, 🛑 广告拦截
+  - RULE-SET, base_gfw, 🔰 节点选择
+  - RULE-SET, base_proxy, 🔰 节点选择
+  - RULE-SET, base_direct, ♻️ 全局直连
+  - RULE-SET, base_lancidr, ♻️ 全局直连,no-resolve
+  - RULE-SET, base_cncidr, ♻️ 全局直连,no-resolve
 
-- PROCESS-PATH,/usr/bin/wget,PROXY
-- PROCESS-PATH,C:\Program Files\Google\Chrome\Application\chrome.exe,PROXY
-- PROCESS-PATH-WILDCARD,/usr/*/wget,PROXY
-- PROCESS-PATH-REGEX,.*bin/wget,PROXY
-- PROCESS-PATH-REGEX,(?i).*Application\\chrome.*,PROXY
+  - GEOIP, LAN, DIRECT, no-resolve
+  - GEOIP, CN, DIRECT, no-resolve
+  - MATCH, 🎯 漏网之鱼
 
-- PROCESS-NAME,curl,PROXY
-- PROCESS-NAME,chrome.exe,PROXY
-- PROCESS-NAME,com.termux,PROXY
-- PROCESS-NAME-WILDCARD,*telegram*,PROXY
-- PROCESS-NAME-REGEX,curl$,PROXY
-- PROCESS-NAME-REGEX,(?i)Telegram,PROXY
-- PROCESS-NAME-REGEX,.*telegram.*,PROXY
-- UID,1001,DIRECT
 
-- NETWORK,udp,DIRECT
-- DSCP,4,DIRECT
 
-- RULE-SET,providername,proxy
-- AND,((DOMAIN,baidu.com),(NETWORK,UDP)),DIRECT
-- OR,((NETWORK,UDP),(DOMAIN,baidu.com)),REJECT
-- NOT,((DOMAIN,baidu.com)),PROXY
-- SUB-RULE,(NETWORK,tcp),sub-rule
 
-- MATCH,auto
+  - DOMAIN,ad.com,REJECT
+  - DOMAIN-SUFFIX,google.com,auto
+  - DOMAIN-KEYWORD,google,auto
+  - DOMAIN-WILDCARD,*.google.com,auto
+  - DOMAIN-REGEX,^abc.*com,PROXY
+  - GEOSITE,youtube,PROXY
+
+  - IP-CIDR,127.0.0.0/8,DIRECT,no-resolve
+  - IP-CIDR6,2620:0:2d0:200::7/32,auto
+  - IP-SUFFIX,8.8.8.8/24,PROXY
+  - IP-ASN,13335,DIRECT
+  - GEOIP,CN,DIRECT
+
+  - SRC-GEOIP,cn,DIRECT
+  - SRC-IP-ASN,9808,DIRECT
+  - SRC-IP-CIDR,192.168.1.201/32,DIRECT
+  - SRC-IP-SUFFIX,192.168.1.201/8,DIRECT
+
+  - DST-PORT,80,DIRECT
+  - SRC-PORT,7777,DIRECT
+
+  - IN-PORT,7890,PROXY
+  - IN-TYPE,SOCKS/HTTP,PROXY
+  - IN-USER,mihomo,PROXY
+  - IN-NAME,ss,PROXY
+
+  - PROCESS-PATH,/usr/bin/wget,PROXY
+  - PROCESS-PATH,C:\Program Files\Google\Chrome\Application\chrome.exe,PROXY
+  - PROCESS-PATH-WILDCARD,/usr/*/wget,PROXY
+  - PROCESS-PATH-REGEX,.*bin/wget,PROXY
+  - PROCESS-PATH-REGEX,(?i).*Application\\chrome.*,PROXY
+
+  - PROCESS-NAME,curl,PROXY
+  - PROCESS-NAME,chrome.exe,PROXY
+  - PROCESS-NAME,com.termux,PROXY
+  - PROCESS-NAME-WILDCARD,*telegram*,PROXY
+  - PROCESS-NAME-REGEX,curl$,PROXY
+  - PROCESS-NAME-REGEX,(?i)Telegram,PROXY
+  - PROCESS-NAME-REGEX,.*telegram.*,PROXY
+  - UID,1001,DIRECT
+
+  - NETWORK,udp,DIRECT
+  - DSCP,4,DIRECT
+
+  - RULE-SET,providername,proxy
+  - AND,((DOMAIN,baidu.com),(NETWORK,UDP)),DIRECT
+  - OR,((NETWORK,UDP),(DOMAIN,baidu.com)),REJECT
+  - NOT,((DOMAIN,baidu.com)),PROXY
+  - SUB-RULE,(NETWORK,tcp),sub-rule
+
+  - MATCH,auto
