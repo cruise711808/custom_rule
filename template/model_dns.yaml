@@ -48,11 +48,11 @@ dns:
     "geosite:category-ai-!cn": *os_dns
     "geosite:category-cdn-cn": *cn_dns
     "geosite:private": *cn_dns   
-    "geosite:category-ads-all": rcode://success
-    "geosite:category-ads-all@ads": rcode://success
-    "geosite:category-ads@ads": rcode://success
-    "geosite:win-spy": rcode://success
-    "geosite:category-public-tracker": rcode://success
+    # "geosite:category-ads-all": rcode://success
+    # "geosite:category-ads-all@ads": rcode://success
+    # "geosite:category-ads@ads": rcode://success
+    # "geosite:win-spy": rcode://success
+    # "geosite:category-public-tracker": rcode://success
     "*.sharvo.top": [223.5.5.5, 2400:3200::1] # 您的域名直连 IPv6 解析
   nameserver: # 默认的域名解析服务器
     - tls://dns.alidns.com
