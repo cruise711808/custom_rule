@@ -11,9 +11,8 @@ proxy-groups:
 - { name: "🔎 谷歌应用", type: select, proxies: [ "🔰 节点选择", "🇺🇳 其他主节点", "🇺🇳 其他备节点", "♻️ 全局直连" ] }
 - { name: "🎮 游戏平台", type: select, proxies: [ "🔰 节点选择", "🇺🇳 其他主节点", "🇺🇳 其他备节点", "♻️ 全局直连" ] }
 - { name: "⬇️ 下载服务", type: select, proxies: [ "⬇️ 下载节点", "🔰 节点选择", "♻️ 全局直连" ] }
-- { name: "♻️ 全局直连", type: select, proxies: [ "DIRECT" ] }
 - { name: "🛑 广告拦截", type: select, proxies: [ "REJECT", "DIRECT" ] }
-- { name: "🛡️ 隐私防护", type: select, proxies: [ "REJECT", "DIRECT" ] }
+- { name: "♻️ 全局直连", type: select, proxies: [ "DIRECT" ] }
 - { name: "🎯 漏网之鱼", type: select, proxies: [ "🔰 节点选择", "♻️ 全局直连" ] }
 
 
