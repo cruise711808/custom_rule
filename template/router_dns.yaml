@@ -9,7 +9,7 @@ dns:
   ipv6: true
   default-nameserver: # 默认 DNS, 用于解析 DNS 服务器 的域名
     - tls://223.5.5.5:853
-    - tls://2400:3200::1:853
+    - tls://[2400:3200::1]:853
     - tls://101.101.101.101:853
   enhanced-mode: 'redir-host'
   nameserver-policy: # 指定域名查询的解析服务器，可使用 geosite, 优先于 nameserver/fallback 查询
@@ -53,7 +53,7 @@ dns:
     # "geosite:category-ads@ads": rcode://success
     # "geosite:win-spy": rcode://success
     # "geosite:category-public-tracker": rcode://success
-    "*.sharvo.top": [223.5.5.5, 2400:3200::1] # 您的域名直连 IPv6 解析
+    "*.sharvo.top": [223.5.5.5, "2400:3200::1"] # 您的域名直连 IPv6 解析
   nameserver: # 默认的域名解析服务器
     - tls://dns.alidns.com
     - tls://dot.pub
