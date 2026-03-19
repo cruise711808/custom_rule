@@ -6,14 +6,14 @@ proxy-groups:
 - { name: "📹 油管视频", type: select, proxies: [ "🔰 节点选择", "🇺🇳 其他主节点", "🇺🇳 其他备节点" ] }
 - { name: "🎥 奈飞视频", type: select, proxies: [ "🇺🇲 美国节点", "🇭🇰 香港节点", "🇹🇼 台湾节点", "🇸🇬 新加坡节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇳 其他主节点", "🇺🇳 其他备节点" ] }
 - { name: "📺 巴哈姆特", type: select, proxies: [ "🇹🇼 台湾节点", "🔰 节点选择" ] }
-- { name: "📺 哔哩哔哩", type: select, proxies: [ "♻️ 全局直连", "🇹🇼 台湾节点", "🇭🇰 香港节点" ] }
-- { name: "🐱 GITHUB", type: select, proxies: [ "🔰 节点选择", "♻️ 全局直连" ] }
-- { name: "🔎 谷歌应用", type: select, proxies: [ "🔰 节点选择", "🇺🇳 其他主节点", "🇺🇳 其他备节点", "♻️ 全局直连" ] }
-- { name: "🎮 游戏平台", type: select, proxies: [ "🔰 节点选择", "🇺🇳 其他主节点", "🇺🇳 其他备节点", "♻️ 全局直连" ] }
-- { name: "⬇️ 下载服务", type: select, proxies: [ "⬇️ 下载节点", "🔰 节点选择", "♻️ 全局直连" ] }
+- { name: "📺 哔哩哔哩", type: select, proxies: [ "DIRECT", "🇹🇼 台湾节点", "🇭🇰 香港节点" ] }
+- { name: "🐱 GITHUB", type: select, proxies: [ "🔰 节点选择", "DIRECT" ] }
+- { name: "🔎 谷歌应用", type: select, proxies: [ "🔰 节点选择", "🇺🇳 其他主节点", "🇺🇳 其他备节点", "DIRECT" ] }
+- { name: "🎮 游戏平台", type: select, proxies: [ "🔰 节点选择", "🇺🇳 其他主节点", "🇺🇳 其他备节点", "DIRECT" ] }
+- { name: "⬇️ 下载服务", type: select, proxies: [ "⬇️ 下载节点", "🔰 节点选择", "DIRECT" ] }
 - { name: "🛑 广告拦截", type: select, proxies: [ "REJECT", "DIRECT" ] }
-- { name: "♻️ 全局直连", type: select, proxies: [ "DIRECT" ] }
-- { name: "🎯 漏网之鱼", type: select, proxies: [ "🔰 节点选择", "♻️ 全局直连" ] }
+- { name: "🛡️ 隐私防护", type: select, proxies: [ "REJECT", "DIRECT" ] }
+- { name: "🎯 漏网之鱼", type: select, proxies: [ "🔰 节点选择", "DIRECT" ] }
 
 
 - { name: "🇭🇰 香港主集群", type: url-test, use: [provider1], url: https://cp.cloudflare.com, interval: 500, lazy: true, tolerance: 30, timeout: 3000, max-failed-times: 3, filter: "香港|HK", exclude-filter: "高级" }
