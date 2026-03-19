@@ -13,6 +13,7 @@ dns:
     - tls://101.101.101.101:853
   enhanced-mode: 'redir-host'
   nameserver-policy: # 指定域名查询的解析服务器，可使用 geosite, 优先于 nameserver/fallback 查询
+    "cdn.jsdelivr.net": [ "tls://223.5.5.5:853", "tls://[2400:3200::1]:853" ]
     "geosite:cn": &cn_dns
       - 223.6.6.6
       - 119.28.28.28
