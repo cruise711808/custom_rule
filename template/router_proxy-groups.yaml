@@ -1,52 +1,50 @@
 proxy-groups:
+  - { name: "🔰 节点选择", type: select, proxies: [ "🔁 自动节点", "🇭🇰 香港节点", "🇹🇼 台湾节点", "🇸🇬 新加坡节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇲 美国节点", "🇺🇳 其他主节点", "🇺🇳 其他备节点", "⬇️ 下载节点" ] }
+  - { name: "🤖 GPT服务", type: select, proxies: [ "🇹🇼 台湾节点", "🇸🇬 新加坡节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇲 美国节点", "🇺🇳 其他主节点", "🇺🇳 其他备节点" ] }
+  - { name: "📲 电报消息", type: select, proxies: [ "🔰 节点选择", "🇺🇳 其他主节点", "🇺🇳 其他备节点" ] }
+  - { name: "📹 油管视频", type: select, proxies: [ "🔰 节点选择", "🇺🇳 其他主节点", "🇺🇳 其他备节点" ] }
+  - { name: "🎥 奈飞视频", type: select, proxies: [ "🇺🇲 美国节点", "🇭🇰 香港节点", "🇹🇼 台湾节点", "🇸🇬 新加坡节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇳 其他主节点", "🇺🇳 其他备节点" ] }
+  - { name: "📺 巴哈姆特", type: select, proxies: [ "🇹🇼 台湾节点", "🔰 节点选择" ] }
+  - { name: "📺 哔哩哔哩", type: select, proxies: [ "DIRECT", "🇹🇼 台湾节点", "🇭🇰 香港节点" ] }
+  - { name: "🐱 GITHUB", type: select, proxies: [ "🔰 节点选择", "DIRECT" ] }
+  - { name: "🔎 谷歌应用", type: select, proxies: [ "🔰 节点选择", "🇺🇳 其他主节点", "🇺🇳 其他备节点", "DIRECT" ] }
+  - { name: "🎮 游戏平台", type: select, proxies: [ "🔰 节点选择", "🇺🇳 其他主节点", "🇺🇳 其他备节点", "DIRECT" ] }
+  - { name: "⬇️ 下载服务", type: select, proxies: [ "⬇️ 下载节点", "🔰 节点选择", "DIRECT" ] }
+  - { name: "🛑 广告拦截", type: select, proxies: [ "REJECT", "DIRECT" ] }
+  - { name: "🛡️ 隐私防护", type: select, proxies: [ "REJECT", "DIRECT" ] }
+  - { name: "🎯 漏网之鱼", type: select, proxies: [ "🔰 节点选择", "DIRECT" ] }
 
-- { name: "🔰 节点选择", type: select, proxies: [ "🔁 自动节点", "🇭🇰 香港节点", "🇹🇼 台湾节点", "🇸🇬 新加坡节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇲 美国节点", "🇺🇳 其他主节点", "🇺🇳 其他备节点", "⬇️ 下载节点" ] }
-- { name: "🤖 GPT服务", type: select, proxies: [ "🇹🇼 台湾节点", "🇸🇬 新加坡节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇲 美国节点", "🇺🇳 其他主节点", "🇺🇳 其他备节点" ] }
-- { name: "📲 电报消息", type: select, proxies: [ "🔰 节点选择", "🇺🇳 其他主节点", "🇺🇳 其他备节点" ] }
-- { name: "📹 油管视频", type: select, proxies: [ "🔰 节点选择", "🇺🇳 其他主节点", "🇺🇳 其他备节点" ] }
-- { name: "🎥 奈飞视频", type: select, proxies: [ "🇺🇲 美国节点", "🇭🇰 香港节点", "🇹🇼 台湾节点", "🇸🇬 新加坡节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇺🇳 其他主节点", "🇺🇳 其他备节点" ] }
-- { name: "📺 巴哈姆特", type: select, proxies: [ "🇹🇼 台湾节点", "🔰 节点选择" ] }
-- { name: "📺 哔哩哔哩", type: select, proxies: [ "DIRECT", "🇹🇼 台湾节点", "🇭🇰 香港节点" ] }
-- { name: "🐱 GITHUB", type: select, proxies: [ "🔰 节点选择", "DIRECT" ] }
-- { name: "🔎 谷歌应用", type: select, proxies: [ "🔰 节点选择", "🇺🇳 其他主节点", "🇺🇳 其他备节点", "DIRECT" ] }
-- { name: "🎮 游戏平台", type: select, proxies: [ "🔰 节点选择", "🇺🇳 其他主节点", "🇺🇳 其他备节点", "DIRECT" ] }
-- { name: "⬇️ 下载服务", type: select, proxies: [ "⬇️ 下载节点", "🔰 节点选择", "DIRECT" ] }
-- { name: "🛑 广告拦截", type: select, proxies: [ "REJECT", "DIRECT" ] }
-- { name: "🛡️ 隐私防护", type: select, proxies: [ "REJECT", "DIRECT" ] }
-- { name: "🎯 漏网之鱼", type: select, proxies: [ "🔰 节点选择", "DIRECT" ] }
+  - { name: "🇭🇰 香港主集群", type: url-test, use: [provider1], url: https://cp.cloudflare.com, interval: 500, lazy: true, tolerance: 30, timeout: 3000, max-failed-times: 3, filter: "香港|HK", exclude-filter: "高级" }
+  - { name: "🇭🇰 香港副集群", type: url-test, use: [provider1], url: https://cp.cloudflare.com, interval: 500, lazy: true, tolerance: 30, timeout: 3000, max-failed-times: 3, filter: "^(?=.*香港)(?=.*高级).*$" }
+  - { name: "🇭🇰 香港备集群", type: url-test, use: [provider2], url: https://cp.cloudflare.com, interval: 500, lazy: true, tolerance: 30, timeout: 3000, max-failed-times: 3, filter: "香港|HK", exclude-filter: "低倍率" }
+  - { name: "🇭🇰 香港节点", type: fallback, proxies: ["🇭🇰 香港主集群", "🇭🇰 香港副集群", "🇭🇰 香港备集群"], url: https://cp.cloudflare.com, interval: 300, lazy: true, timeout: 3000, max-failed-times: 2 }
 
+  - { name: "🇹🇼 台湾主集群", type: url-test, use: [provider1], url: https://cp.cloudflare.com, interval: 500, lazy: true, tolerance: 30, timeout: 3000, max-failed-times: 3, filter: "台|TW" }
+  - { name: "🇹🇼 台湾副集群", type: url-test, use: [provider1], url: https://cp.cloudflare.com, interval: 500, lazy: true, tolerance: 30, timeout: 3000, max-failed-times: 3, filter: "^(?=.*台湾)(?=.*高级).*$" }
+  - { name: "🇹🇼 台湾备集群", type: url-test, use: [provider2], url: https://cp.cloudflare.com, interval: 500, lazy: true, tolerance: 30, timeout: 3000, max-failed-times: 3, filter: "台|TW", exclude-filter: "低倍率" }
+  - { name: "🇹🇼 台湾节点", type: fallback, proxies: ["🇹🇼 台湾主集群", "🇹🇼 台湾副集群", "🇹🇼 台湾备集群"], url: https://cp.cloudflare.com, interval: 300, lazy: true, timeout: 3000, max-failed-times: 2 }
 
-- { name: "🇭🇰 香港主集群", type: url-test, use: [provider1], url: https://cp.cloudflare.com, interval: 500, lazy: true, tolerance: 30, timeout: 3000, max-failed-times: 3, filter: "香港|HK", exclude-filter: "高级" }
-- { name: "🇭🇰 香港副集群", type: url-test, use: [provider1], url: https://cp.cloudflare.com, interval: 500, lazy: true, tolerance: 30, timeout: 3000, max-failed-times: 3, filter: "^(?=.*香港)(?=.*高级).*$" }
-- { name: "🇭🇰 香港备集群", type: url-test, use: [provider2], url: https://cp.cloudflare.com, interval: 500, lazy: true, tolerance: 30, timeout: 3000, max-failed-times: 3, filter: "香港|HK", exclude-filter: "低倍率" }
-- { name: "🇭🇰 香港节点", type: fallback, proxies: ["🇭🇰 香港主集群", "🇭🇰 香港副集群", "🇭🇰 香港备集群"], url: https://cp.cloudflare.com, interval: 300, lazy: true, timeout: 3000, max-failed-times: 2 }
+  - { name: "🇸🇬 新加坡主集群", type: url-test, use: [provider1], url: https://cp.cloudflare.com, interval: 500, lazy: true, tolerance: 30, timeout: 3000, max-failed-times: 3, filter: "新加坡|SG" }
+  - { name: "🇸🇬 新加坡副集群", type: url-test, use: [provider1], url: https://cp.cloudflare.com, interval: 500, lazy: true, tolerance: 30, timeout: 3000, max-failed-times: 3, filter: "^(?=.*新加坡)(?=.*高级).*$" }
+  - { name: "🇸🇬 新加坡备集群", type: url-test, use: [provider2], url: https://cp.cloudflare.com, interval: 500, lazy: true, tolerance: 30, timeout: 3000, max-failed-times: 3, filter: "新加坡|SG", exclude-filter: "低倍率" }
+  - { name: "🇸🇬 新加坡节点", type: fallback, proxies: ["🇸🇬 新加坡主集群", "🇸🇬 新加坡副集群", "🇸🇬 新加坡备集群"], url: https://cp.cloudflare.com, interval: 300, lazy: true, timeout: 3000, max-failed-times: 2 }
 
-- { name: "🇹🇼 台湾主集群", type: url-test, use: [provider1], url: https://cp.cloudflare.com, interval: 500, lazy: true, tolerance: 30, timeout: 3000, max-failed-times: 3, filter: "台|TW" }
-- { name: "🇹🇼 台湾副集群", type: url-test, use: [provider1], url: https://cp.cloudflare.com, interval: 500, lazy: true, tolerance: 30, timeout: 3000, max-failed-times: 3, filter: "^(?=.*台湾)(?=.*高级).*$" }
-- { name: "🇹🇼 台湾备集群", type: url-test, use: [provider2], url: https://cp.cloudflare.com, interval: 500, lazy: true, tolerance: 30, timeout: 3000, max-failed-times: 3, filter: "台|TW", exclude-filter: "低倍率" }
-- { name: "🇹🇼 台湾节点", type: fallback, proxies: ["🇹🇼 台湾主集群", "🇹🇼 台湾副集群", "🇹🇼 台湾备集群"], url: https://cp.cloudflare.com, interval: 300, lazy: true, timeout: 3000, max-failed-times: 2 }
+  - { name: "🇯🇵 日本主集群", type: url-test, use: [provider1], url: https://cp.cloudflare.com, interval: 800, lazy: true, tolerance: 30, timeout: 3000, max-failed-times: 3, filter: "日本|JP" }
+  - { name: "🇯🇵 日本副集群", type: url-test, use: [provider1], url: https://cp.cloudflare.com, interval: 800, lazy: true, tolerance: 30, timeout: 3000, max-failed-times: 3, filter: "^(?=.*日本)(?=.*高级).*$" }
+  - { name: "🇯🇵 日本备集群", type: url-test, use: [provider2], url: https://cp.cloudflare.com, interval: 800, lazy: true, tolerance: 30, timeout: 3000, max-failed-times: 3, filter: "日本|JP", exclude-filter: "低倍率" }
+  - { name: "🇯🇵 日本节点", type: fallback, proxies: ["🇯🇵 日本主集群", "🇯🇵 日本副集群", "🇯🇵 日本备集群"], url: https://cp.cloudflare.com, interval: 500, lazy: true, timeout: 3000, max-failed-times: 2 }
 
-- { name: "🇸🇬 新加坡主集群", type: url-test, use: [provider1], url: https://cp.cloudflare.com, interval: 500, lazy: true, tolerance: 30, timeout: 3000, max-failed-times: 3, filter: "新加坡|SG" }
-- { name: "🇸🇬 新加坡副集群", type: url-test, use: [provider1], url: https://cp.cloudflare.com, interval: 500, lazy: true, tolerance: 30, timeout: 3000, max-failed-times: 3, filter: "^(?=.*新加坡)(?=.*高级).*$" }
-- { name: "🇸🇬 新加坡备集群", type: url-test, use: [provider2], url: https://cp.cloudflare.com, interval: 500, lazy: true, tolerance: 30, timeout: 3000, max-failed-times: 3, filter: "新加坡|SG", exclude-filter: "低倍率" }
-- { name: "🇸🇬 新加坡节点", type: fallback, proxies: ["🇸🇬 新加坡主集群", "🇸🇬 新加坡副集群", "🇸🇬 新加坡备集群"], url: https://cp.cloudflare.com, interval: 300, lazy: true, timeout: 3000, max-failed-times: 2 }
+  - { name: "🇰🇷 韩国主集群", type: url-test, use: [provider1], url: https://cp.cloudflare.com, interval: 800, lazy: true, tolerance: 30, timeout: 3000, max-failed-times: 3, filter: "韩国|KR" }
+  - { name: "🇰🇷 韩国副集群", type: url-test, use: [provider1], url: https://cp.cloudflare.com, interval: 800, lazy: true, tolerance: 30, timeout: 3000, max-failed-times: 3, filter: "^(?=.*韩国)(?=.*高级).*$" }
+  - { name: "🇰🇷 韩国备集群", type: url-test, use: [provider2], url: https://cp.cloudflare.com, interval: 800, lazy: true, tolerance: 30, timeout: 3000, max-failed-times: 3, filter: "韩国|KR", exclude-filter: "低倍率" }
+  - { name: "🇰🇷 韩国节点", type: fallback, proxies: ["🇰🇷 韩国主集群", "🇰🇷 韩国副集群", "🇰🇷 韩国备集群"], url: https://cp.cloudflare.com, interval: 500, lazy: true, timeout: 3000, max-failed-times: 2 }
 
-- { name: "🇯🇵 日本主集群", type: url-test, use: [provider1], url: https://cp.cloudflare.com, interval: 800, lazy: true, tolerance: 30, timeout: 3000, max-failed-times: 3, filter: "日本|JP" }
-- { name: "🇯🇵 日本副集群", type: url-test, use: [provider1], url: https://cp.cloudflare.com, interval: 800, lazy: true, tolerance: 30, timeout: 3000, max-failed-times: 3, filter: "^(?=.*日本)(?=.*高级).*$" }
-- { name: "🇯🇵 日本备集群", type: url-test, use: [provider2], url: https://cp.cloudflare.com, interval: 800, lazy: true, tolerance: 30, timeout: 3000, max-failed-times: 3, filter: "日本|JP", exclude-filter: "低倍率" }
-- { name: "🇯🇵 日本节点", type: fallback, proxies: ["🇯🇵 日本主集群", "🇯🇵 日本副集群", "🇯🇵 日本备集群"], url: https://cp.cloudflare.com, interval: 500, lazy: true, timeout: 3000, max-failed-times: 2 }
+  - { name: "🇺🇸 美国主集群", type: url-test, use: [provider1], url: https://cp.cloudflare.com, interval: 800, lazy: true, tolerance: 30, timeout: 3000, max-failed-times: 3, filter: "美国|US" }
+  - { name: "🇺🇸 美国副集群", type: url-test, use: [provider1], url: https://cp.cloudflare.com, interval: 800, lazy: true, tolerance: 30, timeout: 3000, max-failed-times: 3, filter: "^(?=.*美国)(?=.*高级).*$" }
+  - { name: "🇺🇸 美国备集群", type: url-test, use: [provider2], url: https://cp.cloudflare.com, interval: 800, lazy: true, tolerance: 30, timeout: 3000, max-failed-times: 3, filter: "美国|US", exclude-filter: "低倍率" }
+  - { name: "🇺🇸 美国节点", type: fallback, proxies: ["🇺🇸 美国主集群", "🇺🇸 美国副集群", "🇺🇸 美国备集群"], url: https://cp.cloudflare.com, interval: 500, lazy: true, timeout: 3000, max-failed-times: 2 }
 
-- { name: "🇰🇷 韩国主集群", type: url-test, use: [provider1], url: https://cp.cloudflare.com, interval: 800, lazy: true, tolerance: 30, timeout: 3000, max-failed-times: 3, filter: "韩国|KR" }
-- { name: "🇰🇷 韩国副集群", type: url-test, use: [provider1], url: https://cp.cloudflare.com, interval: 800, lazy: true, tolerance: 30, timeout: 3000, max-failed-times: 3, filter: "^(?=.*韩国)(?=.*高级).*$" }
-- { name: "🇰🇷 韩国备集群", type: url-test, use: [provider2], url: https://cp.cloudflare.com, interval: 800, lazy: true, tolerance: 30, timeout: 3000, max-failed-times: 3, filter: "韩国|KR", exclude-filter: "低倍率" }
-- { name: "🇰🇷 韩国节点", type: fallback, proxies: ["🇰🇷 韩国主集群", "🇰🇷 韩国副集群", "🇰🇷 韩国备集群"], url: https://cp.cloudflare.com, interval: 500, lazy: true, timeout: 3000, max-failed-times: 2 }
-
-- { name: "🇺🇸 美国主集群", type: url-test, use: [provider1], url：https://cp.cloudflare.com, interval: 800, lazy: true, tolerance: 30, timeout: 3000, max-failed-times: 3, filter": "美国|US" }
-- { name: "🇺🇸 美国副集群", type: url-test, use: [provider1], url: https://cp.cloudflare.com, interval: 800, lazy: true, tolerance: 30, timeout: 3000, max-failed-times: 3, filter: "^(?=.*美国)(?=.*高级).*$" }
-- { name: "🇺🇸 美国备集群", type: url-test, use: [provider2], url: https://cp.cloudflare.com, interval: 800, lazy: true, tolerance: 30, timeout: 3000, max-failed-times: 3, filter: "美国|US", exclude-filter: "低倍率" }
-- { name: "🇺🇸 美国节点", type: fallback, proxies: ["🇺🇸 美国主集群", "🇺🇸 美国副集群", "🇺🇸 美国备集群"], url: https://cp.cloudflare.com, interval: 500, lazy: true, timeout: 3000, max-failed-times: 2 }
-
-- { name: "🇺🇳 其他主节点", type: select, use: [provider1], exclude-filter: "香港|台湾|日本|韩国|新加坡|美国|Traffic|Expire" }
-- { name: "🇺🇳 其他备节点", type: select, use: [provider2], exclude-filter: "香港|台湾|日本|韩国|新加坡|美国|低倍率|流量|重置|到期" }
-- { name: "🔁 自动节点", type: fallback, proxies: ["🇭🇰 香港节点", "🇹🇼 台湾节点", "🇸🇬 新加坡节点"], url: https://cp.cloudflare.com, interval: 180, lazy: true, timeout: 3000, max-failed-times: 2 } 
-- { name: "⬇️ 下载节点", type: select, use: [provider2], filter: "低倍率" }
+  - { name: "🇺🇳 其他主节点", type: select, use: [provider1], exclude-filter: "香港|台湾|日本|韩国|新加坡|美国|Traffic|Expire" }
+  - { name: "🇺🇳 其他备节点", type: select, use: [provider2], exclude-filter: "香港|台湾|日本|韩国|新加坡|美国|低倍率|流量|重置|到期" }
+  - { name: "🔁 自动节点", type: fallback, proxies: ["🇭🇰 香港节点", "🇹🇼 台湾节点", "🇸🇬 新加坡节点"], url: https://cp.cloudflare.com, interval: 180, lazy: true, timeout: 3000, max-failed-times: 2 } 
+  - { name: "⬇️ 下载节点", type: select, use: [provider2], filter: "低倍率" }
