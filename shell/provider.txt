@@ -1,0 +1,11 @@
+# Clash Provider 配置
+# 格式: name=xxx
+#       url=xxx
+
+[provider1]
+name=123
+url=
+
+[provider2]
+name=123
+url=
