@@ -8,8 +8,6 @@ proxy-providers:
     header:
       User-Agent:
       - "mihomo/1.18.3"
-      Authorization:
-      - 'token 1231231'
     health-check:
       enable: true
       url: https://cp.cloudflare.com
@@ -31,8 +29,6 @@ proxy-providers:
     header:
       User-Agent:
       - "mihomo/1.18.3"
-      Authorization:
-      - 'token 1231231'
     health-check:
       enable: true
       url: https://cp.cloudflare.com

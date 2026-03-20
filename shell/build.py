@@ -6,12 +6,188 @@ from datetime import datetime
 from pathlib import Path
 import sys
 
+try:
+    import yaml
+    YAML_AVAILABLE = True
+except ImportError:
+    yaml = None
+    YAML_AVAILABLE = False
+
 SCRIPT_DIR = Path(__file__).parent
 TEMPLATE_DIR = SCRIPT_DIR.parent / "template"
 OUTPUT_DIR = SCRIPT_DIR / "output"
 CONFIG_FILE = SCRIPT_DIR / "provider.cfg"
 
 VERSION_PREFIX = datetime.now().strftime("%m%d")
+
+VALID_PROXY_GROUP_TYPES = {'select', 'url-test', 'fallback', 'load-balance', 'consistent-hashing', 'static'}
+VALID_RULE_TYPES = {
+    'DOMAIN', 'DOMAIN-SUFFIX', 'DOMAIN-KEYWORD', 'DOMAIN-REGEX',
+    'GEOIP', 'GEOSITE',
+    'IP-CIDR', 'IP-CIDR6', 'SRC-IP-CIDR',
+    'SRC-PORT', 'DST-PORT', 'PROCESS-NAME',
+    'RULE-SET', 'RULE-SET-RETURN',
+    'MATCH', 'DEFAULT'
+}
+RULE_MODIFIERS = {'no-resolve', 'no-rule'}
+
+def validate_yaml_syntax(config_text):
+    if not YAML_AVAILABLE:
+        print("[Warning] PyYAML not installed, skipping YAML syntax validation")
+        return True, None
+    try:
+        yaml.safe_load(config_text)  # type: ignore
+        return True, None
+    except yaml.YAMLError as e:  # type: ignore
+        return False, f"YAML Syntax Error: {e}"
+
+def validate_proxy_providers(providers):
+    errors = []
+    for pid, info in providers.items():
+        p_type = info.get('type', '')
+        if not p_type:
+            errors.append(f"Provider '{pid}' missing required field 'type'")
+        if p_type == 'http':
+            p_url = info.get('url', '')
+            if not p_url:
+                errors.append(f"Provider '{pid}' (type=http) missing required field 'url'")
+    return errors
+
+def validate_proxy_groups_structure(groups, provider_names):
+    errors = []
+    if not groups or not isinstance(groups, list):
+        errors.append("Missing or invalid 'proxy-groups' section")
+        return errors
+            
+    group_names = set()
+    defined_groups = set()
+    defined_providers = set(provider_names)
+    
+    for group in groups:
+        if not isinstance(group, dict):
+            errors.append(f"Invalid group structure: {group}")
+            continue
+                
+        name = group.get('name', '')
+        g_type = group.get('type', '')
+        proxies = group.get('proxies', [])
+        use = group.get('use', [])
+            
+        if not name:
+            errors.append(f"Group missing name: {group}")
+            continue
+                
+        group_names.add(name)
+        defined_groups.add(name)
+            
+        if g_type not in VALID_PROXY_GROUP_TYPES:
+            errors.append(f"Group '{name}' has invalid type '{g_type}'")
+            
+        if use:
+            for p in use:
+                p_clean = p.replace('[', '').replace(']', '')
+                if p_clean not in defined_providers:
+                    errors.append(f"Group '{name}' references undefined provider '{p}'")
+            
+        if proxies:
+            for p in proxies:
+                p_clean = p.replace('[', '').replace(']', '')
+                if p_clean not in defined_groups and p_clean not in ('DIRECT', 'REJECT', 'URL-TEST', 'FALLBACK', 'LOAD-BALANCE'):
+                    if p_clean not in defined_providers:
+                        pass
+    
+    return errors
+
+def validate_rules_format(rules_text, group_names, provider_names):
+    errors = []
+    all_proxy_refs = group_names | {'DIRECT', 'REJECT'} | set(provider_names)
+    
+    def get_target(parts):
+        for i in range(len(parts) - 1, 0, -1):
+            candidate = parts[i].strip()
+            if candidate.lower() not in RULE_MODIFIERS:
+                return candidate
+        return ''
+    
+    for line_num, line in enumerate(rules_text.strip().split('\n'), 1):
+        line = line.strip()
+        if not line or line.startswith('#'):
+            continue
+            
+        if line.startswith('- '):
+            line = line[2:]
+        
+        parts = line.split(',')
+        if not parts:
+            continue
+            
+        rule_type = parts[0].strip()
+        if rule_type in ('GEOSITE', 'GEOIP', 'RULE-SET'):
+            if len(parts) < 3:
+                errors.append(f"Line {line_num}: Invalid rule format '{line}', expected RULE_TYPE,VALUE,GROUP")
+                continue
+            target = get_target(parts)
+            if target and target not in all_proxy_refs:
+                errors.append(f"Line {line_num}: Rule references undefined group/provider '{target}'")
+        elif rule_type == 'MATCH':
+            if len(parts) < 2:
+                errors.append(f"Line {line_num}: Invalid MATCH rule format '{line}'")
+                continue
+            target = get_target(parts)
+            if target and target not in all_proxy_refs:
+                errors.append(f"Line {line_num}: MATCH rule references undefined target '{target}'")
+        elif rule_type == 'DEFAULT':
+            continue
+        elif rule_type in VALID_RULE_TYPES:
+            if len(parts) < 2:
+                errors.append(f"Line {line_num}: Invalid rule format '{line}'")
+                continue
+            if len(parts) >= 3:
+                target = get_target(parts)
+                if target and target not in all_proxy_refs:
+                    errors.append(f"Line {line_num}: Rule references undefined group/provider '{target}'")
+        else:
+            errors.append(f"Line {line_num}: Unknown rule type '{rule_type}'")
+    
+    return errors
+
+def validate_config(config_text, provider_names):
+    errors = []
+    
+    is_valid, yaml_error = validate_yaml_syntax(config_text)
+    if not is_valid:
+        return [yaml_error]
+    
+    if not YAML_AVAILABLE:
+        return []
+    
+    try:
+        data = yaml.safe_load(config_text)  # type: ignore
+        
+        if 'proxy-providers' in data:
+            pp_errors = validate_proxy_providers(data.get('proxy-providers', {}))
+            errors.extend(pp_errors)
+        
+        if 'proxy-groups' in data:
+            g_errors = validate_proxy_groups_structure(data['proxy-groups'], provider_names)
+            errors.extend(g_errors)
+        
+        if 'rules' in data:
+            rules_list = data.get('rules', [])
+            if isinstance(rules_list, list):
+                rules_text = '\n'.join(str(r) for r in rules_list)
+                group_names = set()
+                if 'proxy-groups' in data:
+                    for g in data['proxy-groups']:
+                        if isinstance(g, dict):
+                            group_names.add(g.get('name', ''))
+                r_errors = validate_rules_format(rules_text, group_names, provider_names)
+                errors.extend(r_errors)
+                
+    except yaml.YAMLError as e:  # type: ignore
+        errors.append(f"YAML parse error: {e}")
+    
+    return errors
 
 def get_next_version():
     if not OUTPUT_DIR.exists():
@@ -128,6 +304,18 @@ def main():
     if not final_config.strip():
         print(f"Error: No template files found for type '{config_type}'")
         return
+
+    print(f"\nValidating generated configuration...")
+    validation_errors = validate_config(final_config, provider_names)
+    
+    if validation_errors:
+        print(f"\n[ERROR] Configuration validation failed:")
+        for err in validation_errors:
+            print(f"  - {err}")
+        print(f"\nPlease fix the issues above and try again.")
+        return
+    
+    print(f"[OK] Configuration validation passed!")
 
     # 自动转换首字母大写作为输出前缀
     prefix = f"Clash_{config_type.capitalize()}"
