@@ -20,7 +20,7 @@ proxy-providers:
     override:
       skip-cert-verify: true
       ip-version: ipv4-prefer
-      additional-prefix: "provider1 prefix |"
+      additional-prefix: "provider1|"
   
   provider2:
     type: http
@@ -43,4 +43,4 @@ proxy-providers:
     override:
       skip-cert-verify: true
       ip-version: ipv4-prefer
-      additional-prefix: "provider2 prefix |"
+      additional-prefix: "provider2|"
