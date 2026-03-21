@@ -11,8 +11,8 @@ tcp-concurrent: true
 # -- 外部控制与缓存 --
 external-controller: 0.0.0.0:9090
 secret: "clash-ex"
-external-ui: "./ui"
-external-ui-url: "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip" #从 GitHub Pages 分支获取
+external-ui: "ui"
+external-ui-url: "https://cdn.jsdelivr.net/gh/Zephyruso/zashboard@releases/latest/download/dist-cdn-fonts.zip"
 profile:
   store-selected: true
 
@@ -40,5 +40,3 @@ sniffer:
   skip-domain:
     - "+.sharvo.top"
     - "Mijia Cloud"
-    - "rule-set:base_private"
-    - "rule-set:base_direct"

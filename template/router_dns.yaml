@@ -20,9 +20,9 @@ dns:
       - 119.28.28.28
       - 114.114.114.114
     "geosite:geolocation-!cn": &os_dns
-      - https://doh.opendns.com/dns-query
-      - https://dns.google/dns-query
-      - https://cloudflare-dns.com/dns-query
+      - "https://dns.google/dns-query#🔰 节点选择&skip-cert-verify&disable-ipv6"
+      - "https://cloudflare-dns.com/dns-query#%🔰 节点选择&skip-cert-verify&disable-ipv6"
+      - "https://doh.opendns.com/dns-query#🔰 节点选择&skip-cert-verify&disable-ipv6"
     "geosite:category-companies": *os_dns
     "geosite:category-porn": *os_dns
     "geosite:gfw": *os_dns
@@ -60,10 +60,10 @@ dns:
     - tls://dns.alidns.com
     - tls://dot.pub
   fallback: # 后备域名解析服务器，一般情况下使用境外 DNS, 保证结果可信
-    - https://doh.opendns.com/dns-query
-    - https://dns.google/dns-query
-    - https://cloudflare-dns.com/dns-query
-  proxy-server-nameserver:
+    - "https://dns.google/dns-query#🔰 节点选择&skip-cert-verify&disable-ipv6"
+    - "https://cloudflare-dns.com/dns-query#🔰 节点选择&skip-cert-verify&disable-ipv6"
+    - "https://doh.opendns.com/dns-query#%🔰 节点选择&skip-cert-verify&disable-ipv6"
+  proxy-server-nameserver: # 代理节点域名解析服务器
     - tls://dns.alidns.com
     - tls://dot.pub
     - tls://223.5.5.5

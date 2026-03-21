@@ -53,15 +53,22 @@ def validate_proxy_providers(providers):
                 errors.append(f"Provider '{pid}' (type=http) missing required field 'url'")
     return errors
 
-def validate_proxy_groups_structure(groups, provider_names):
+def validate_proxy_groups_structure(groups, provider_names, provider_sections=None):
     errors = []
     if not groups or not isinstance(groups, list):
         errors.append("Missing or invalid 'proxy-groups' section")
         return errors
-            
-    group_names = set()
-    defined_groups = set()
+        
     defined_providers = set(provider_names)
+    provider_sections = set(provider_sections) if provider_sections else set()
+    
+    all_group_names = set()
+    for group in groups:
+        if not isinstance(group, dict):
+            continue
+        name = group.get('name', '')
+        if name:
+            all_group_names.add(name)
     
     for group in groups:
         if not isinstance(group, dict):
@@ -76,9 +83,6 @@ def validate_proxy_groups_structure(groups, provider_names):
         if not name:
             errors.append(f"Group missing name: {group}")
             continue
-                
-        group_names.add(name)
-        defined_groups.add(name)
             
         if g_type not in VALID_PROXY_GROUP_TYPES:
             errors.append(f"Group '{name}' has invalid type '{g_type}'")
@@ -86,15 +90,15 @@ def validate_proxy_groups_structure(groups, provider_names):
         if use:
             for p in use:
                 p_clean = p.replace('[', '').replace(']', '')
-                if p_clean not in defined_providers:
+                if p_clean not in defined_providers and p_clean not in provider_sections:
                     errors.append(f"Group '{name}' references undefined provider '{p}'")
             
         if proxies:
             for p in proxies:
                 p_clean = p.replace('[', '').replace(']', '')
-                if p_clean not in defined_groups and p_clean not in ('DIRECT', 'REJECT', 'URL-TEST', 'FALLBACK', 'LOAD-BALANCE'):
+                if p_clean not in all_group_names and p_clean not in ('DIRECT', 'REJECT', 'URL-TEST', 'FALLBACK', 'LOAD-BALANCE'):
                     if p_clean not in defined_providers:
-                        pass
+                        errors.append(f"Group '{name}' references undefined proxy '{p_clean}'")
     
     return errors
 
@@ -136,8 +140,6 @@ def validate_rules_format(rules_text, group_names, provider_names):
             target = get_target(parts)
             if target and target not in all_proxy_refs:
                 errors.append(f"Line {line_num}: MATCH rule references undefined target '{target}'")
-        elif rule_type == 'DEFAULT':
-            continue
         elif rule_type in VALID_RULE_TYPES:
             if len(parts) < 2:
                 errors.append(f"Line {line_num}: Invalid rule format '{line}'")
@@ -151,8 +153,9 @@ def validate_rules_format(rules_text, group_names, provider_names):
     
     return errors
 
-def validate_config(config_text, provider_names):
+def validate_config(config_text, provider_names, providers=None):
     errors = []
+    providers = providers or {}
     
     is_valid, yaml_error = validate_yaml_syntax(config_text)
     if not is_valid:
@@ -169,7 +172,7 @@ def validate_config(config_text, provider_names):
             errors.extend(pp_errors)
         
         if 'proxy-groups' in data:
-            g_errors = validate_proxy_groups_structure(data['proxy-groups'], provider_names)
+            g_errors = validate_proxy_groups_structure(data['proxy-groups'], provider_names, list(providers.keys()))
             errors.extend(g_errors)
         
         if 'rules' in data:
@@ -200,7 +203,6 @@ def get_next_version():
     suffixes = []
     for f in existing_files:
         name = f.stem
-        # 匹配 Clash_Router_0320a 格式
         match = re.match(rf'Clash_Router_{VERSION_PREFIX}([a-z]+)', name)
         if match:
             suffixes.append(match.group(1))
@@ -211,12 +213,25 @@ def get_next_version():
     suffixes.sort()
     last_suffix = suffixes[-1]
     
-    # 简单的后缀递增逻辑 a -> b -> ... -> z
-    if last_suffix == 'z':
-        return f"{VERSION_PREFIX}za" # 超过26次后的处理
-    else:
-        next_suffix = chr(ord(last_suffix[-1]) + 1)
-        return f"{VERSION_PREFIX}{last_suffix[:-1]}{next_suffix}"
+    CHARS = 'abcdefghijklmnopqrstuvwxyz'
+    
+    def base26_to_num(s):
+        num = 0
+        for c in s:
+            num = num * 26 + CHARS.index(c)
+        return num
+    
+    def num_to_base26(num):
+        if num == 0:
+            return 'a'
+        result = ''
+        while num > 0:
+            num, rem = divmod(num, 26)
+            result = CHARS[rem] + result
+        return result
+    
+    next_num = base26_to_num(last_suffix) + 1
+    return f"{VERSION_PREFIX}{num_to_base26(next_num)}"
 
 def parse_provider_config():
     config = configparser.ConfigParser()
@@ -263,8 +278,9 @@ def merge_template_configs(type_name, providers):
         p_url = info['url']
         
         # 1. 替换 Provider 定义块中的 URL
-        url_pattern = rf'({pid}:(?:(?!\n  \S).)*?\s+url:\s*)"[^"]*"'
-        merged_content = re.sub(url_pattern, rf'\1"{p_url}"', merged_content, flags=re.DOTALL)
+        # Match provider block: pid: followed by content, then url: "value"
+        url_pattern = rf'({pid}:[^\n]*\n(?:\s+url:\s*)")[^"]*"'
+        merged_content = re.sub(url_pattern, rf'\g<1>{p_url}"', merged_content)
         
         # 2. 将所有的占位符 ID 替换为真实的名称
         merged_content = re.sub(rf'\b{pid}\b', p_name, merged_content)
@@ -306,7 +322,7 @@ def main():
         return
 
     print(f"\nValidating generated configuration...")
-    validation_errors = validate_config(final_config, provider_names)
+    validation_errors = validate_config(final_config, provider_names, providers)
     
     if validation_errors:
         print(f"\n[ERROR] Configuration validation failed:")
