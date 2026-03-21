@@ -24,9 +24,14 @@ VALID_PROXY_GROUP_TYPES = {'select', 'url-test', 'fallback', 'load-balance', 'co
 VALID_RULE_TYPES = {
     'DOMAIN', 'DOMAIN-SUFFIX', 'DOMAIN-KEYWORD', 'DOMAIN-REGEX',
     'GEOIP', 'GEOSITE',
-    'IP-CIDR', 'IP-CIDR6', 'SRC-IP-CIDR',
-    'SRC-PORT', 'DST-PORT', 'PROCESS-NAME',
+    'IP-CIDR', 'IP-CIDR6', 'SRC-IP-CIDR', 'SRC-IP-SUFFIX', 'IP-SUFFIX', 'IP-ASN',
+    'SRC-GEOIP', 'SRC-IP-ASN',
+    'SRC-PORT', 'DST-PORT', 'PROCESS-NAME', 'PROCESS-PATH', 'PROCESS-PATH-REGEX',
+    'PROCESS-NAME-REGEX',
+    'IN-PORT', 'IN-TYPE', 'IN-USER', 'IN-NAME',
+    'NETWORK', 'DSCP', 'UID',
     'RULE-SET', 'RULE-SET-RETURN',
+    'AND', 'OR', 'NOT', 'SUB-RULE',
     'MATCH', 'DEFAULT'
 }
 RULE_MODIFIERS = {'no-resolve', 'no-rule'}

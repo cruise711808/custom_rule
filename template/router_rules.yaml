@@ -1,7 +1,7 @@
 rules:
   # Reject - Ads
   - DOMAIN, api.miwifi.com, 广告拦截
-  - AND,((SRC-IP-CIDR,192.158.10.3/32),(DST-PORT,53)),广告拦截
+  - AND,((SRC-IP-CIDR,192.168.10.3/32),(DST-PORT,53)),广告拦截
   # Direct - Custom
   - DOMAIN-SUFFIX, sharvo.top, DIRECT
   - DOMAIN, hcfy.ai, DIRECT
@@ -69,6 +69,7 @@ rules:
   - DOMAIN-SUFFIX, f95zone.to, 美国节点
 
   # -- GEOSITE --
+  - GEOSITE, 18comic, 节点选择
   - GEOSITE, category-ai-!cn, GPT服务
   - GEOSITE, telegram, 电报消息
   - GEOSITE, youtube, 油管视频
