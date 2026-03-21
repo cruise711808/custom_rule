@@ -15,14 +15,17 @@ dns:
   nameserver-policy: # 指定域名查询的解析服务器，可使用 geosite, 优先于 nameserver/fallback 查询
     "*.sharvo.top": [223.5.5.5, "2400:3200::1"] # 您的域名直连 IPv6 解析
     "cdn.jsdelivr.net": [ "tls://223.5.5.5:853", "tls://[2400:3200::1]:853" ]
+    "dns.google": [ "tls://223.5.5.5:853", "tls://101.101.101.101:853" ]
+    "cloudflare-dns.com": [ "tls://223.5.5.5:853", "tls://101.101.101.101:853" ]
+    "doh.opendns.com": [ "tls://223.5.5.5:853", "tls://101.101.101.101:853" ]
     "geosite:cn": &cn_dns
       - 223.6.6.6
       - 119.28.28.28
       - 114.114.114.114
     "geosite:geolocation-!cn": &os_dns
-      - "https://dns.google/dns-query#🔰 节点选择&skip-cert-verify&disable-ipv6"
-      - "https://cloudflare-dns.com/dns-query#%🔰 节点选择&skip-cert-verify&disable-ipv6"
-      - "https://doh.opendns.com/dns-query#🔰 节点选择&skip-cert-verify&disable-ipv6"
+      - 'https://dns.google/dns-query#skip-cert-verify=true&disable-ipv6=true'
+      - 'https://cloudflare-dns.com/dns-query#skip-cert-verify=true&disable-ipv6=true'
+      - 'https://doh.opendns.com/dns-query#skip-cert-verify=true&disable-ipv6=true'
     "geosite:category-companies": *os_dns
     "geosite:category-porn": *os_dns
     "geosite:gfw": *os_dns
@@ -60,9 +63,9 @@ dns:
     - tls://dns.alidns.com
     - tls://dot.pub
   fallback: # 后备域名解析服务器，一般情况下使用境外 DNS, 保证结果可信
-    - "https://dns.google/dns-query#🔰 节点选择&skip-cert-verify&disable-ipv6"
-    - "https://cloudflare-dns.com/dns-query#🔰 节点选择&skip-cert-verify&disable-ipv6"
-    - "https://doh.opendns.com/dns-query#%🔰 节点选择&skip-cert-verify&disable-ipv6"
+    - 'https://dns.google/dns-query#skip-cert-verify=true&disable-ipv6=true'
+    - 'https://cloudflare-dns.com/dns-query#skip-cert-verify=true&disable-ipv6=true'
+    - 'https://doh.opendns.com/dns-query#skip-cert-verify=true&disable-ipv6=true'
   proxy-server-nameserver: # 代理节点域名解析服务器
     - tls://dns.alidns.com
     - tls://dot.pub

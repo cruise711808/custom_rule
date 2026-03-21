@@ -1,6 +1,6 @@
 rules:
   # Reject - Ads
-  - DOMAIN, api.miwifi.com, 🛑 广告拦截
+  - DOMAIN, api.miwifi.com, 广告拦截
   # Direct - Custom
   - DOMAIN-SUFFIX, sharvo.top, DIRECT
   - DOMAIN, hcfy.ai, DIRECT
@@ -25,101 +25,100 @@ rules:
   - DOMAIN-KEYWORD, XLLiveUD, DIRECT
 
   # Download - Netdisk
-  - DOMAIN, api-drive.mypikpak.com, ⬇️ 下载服务
-  - DOMAIN-KEYWORD, dl-a10b-, ⬇️ 下载服务
-  - DOMAIN, mega.nz, ⬇️ 下载服务
+  - DOMAIN, api-drive.mypikpak.com, 下载服务
+  - DOMAIN-KEYWORD, dl-a10b-, 下载服务
+  - DOMAIN, mega.nz, 下载服务
   # Download - Game
-  - DOMAIN, ssl-lvlt.cdn.ea.com, ⬇️ 下载服务
-  - DOMAIN, origin-a.akamaihd.net, ⬇️ 下载服务
-  - DOMAIN, uplaypc-s-ubisoft.cdn.ubionline.com.cn, ⬇️ 下载服务
-  - DOMAIN, gamedownloads-rockstargames-com.akamaized.net, ⬇️ 下载服务
-  - DOMAIN, gog-cdn-lumen.secure2.footprint.net, ⬇️ 下载服务
-  - DOMAIN, download.cdp.bethesda.net, ⬇️ 下载服务
-  - DOMAIN, download.hikarifield.co.jp, ⬇️ 下载服务
-  - DOMAIN, client.hikarifield.co.jp, ⬇️ 下载服务
-  - DOMAIN, download.epicgames.com, ⬇️ 下载服务
-  - DOMAIN, download2.epicgames.com, ⬇️ 下载服务
-  - DOMAIN, download3.epicgames.com, ⬇️ 下载服务
-  - DOMAIN, download4.epicgames.com, ⬇️ 下载服务
-  - DOMAIN, epicgames-download1.akamaized.net, ⬇️ 下载服务
-  - DOMAIN, packagespc.xboxlive.com, ⬇️ 下载服务
-  - DOMAIN, xvcf1.xboxlive.com, ⬇️ 下载服务
-  - DOMAIN, xvcf2.xboxlive.com, ⬇️ 下载服务
-  - DOMAIN, assets1.xboxlive.com, ⬇️ 下载服务
-  - DOMAIN, assets2.xboxlive.com, ⬇️ 下载服务
-  - DOMAIN-SUFFIX, dyn.riotcdn.net, ⬇️ 下载服务
-  - DOMAIN-SUFFIX, cdn.ubi.com, ⬇️ 下载服务
+  - DOMAIN, ssl-lvlt.cdn.ea.com, 下载服务
+  - DOMAIN, origin-a.akamaihd.net, 下载服务
+  - DOMAIN, uplaypc-s-ubisoft.cdn.ubionline.com.cn, 下载服务
+  - DOMAIN, gamedownloads-rockstargames-com.akamaized.net, 下载服务
+  - DOMAIN, gog-cdn-lumen.secure2.footprint.net, 下载服务
+  - DOMAIN, download.cdp.bethesda.net, 下载服务
+  - DOMAIN, download.hikarifield.co.jp, 下载服务
+  - DOMAIN, client.hikarifield.co.jp, 下载服务
+  - DOMAIN, download.epicgames.com, 下载服务
+  - DOMAIN, download2.epicgames.com, 下载服务
+  - DOMAIN, download3.epicgames.com, 下载服务
+  - DOMAIN, download4.epicgames.com, 下载服务
+  - DOMAIN, epicgames-download1.akamaized.net, 下载服务
+  - DOMAIN, packagespc.xboxlive.com, 下载服务
+  - DOMAIN, xvcf1.xboxlive.com, 下载服务
+  - DOMAIN, xvcf2.xboxlive.com, 下载服务
+  - DOMAIN, assets1.xboxlive.com, 下载服务
+  - DOMAIN, assets2.xboxlive.com, 下载服务
+  - DOMAIN-SUFFIX, dyn.riotcdn.net, 下载服务
+  - DOMAIN-SUFFIX, cdn.ubi.com, 下载服务
 
 
   # Proxy - google play
-  - DOMAIN-SUFFIX, xn--ngstr-lra8j.com, 🔰 节点选择
-  - DOMAIN-SUFFIX, services.googleapis.cn, 🔰 节点选择
-  - DOMAIN-SUFFIX, ajay.app, 🔰 节点选择
-  - DOMAIN, returnyoutubedislikeapi.com, 🔰 节点选择
+  - DOMAIN-SUFFIX, xn--ngstr-lra8j.com, 节点选择
+  - DOMAIN-SUFFIX, services.googleapis.cn, 节点选择
+  - DOMAIN-SUFFIX, ajay.app, 节点选择
+  - DOMAIN, returnyoutubedislikeapi.com, 节点选择
   # Proxy - pikpak
-  - DOMAIN, mypikpak.com, 🔰 节点选择
-  - DOMAIN, mypikpak.net, 🔰 节点选择
-  - DOMAIN, user.mypikpak.com, 🔰 节点选择
-  - DOMAIN, access.mypikpak.com, 🔰 节点选择
-  - DOMAIN, gofile.io, 🔰 节点选择
+  - DOMAIN, mypikpak.com, 节点选择
+  - DOMAIN, mypikpak.net, 节点选择
+  - DOMAIN, user.mypikpak.com, 节点选择
+  - DOMAIN, access.mypikpak.com, 节点选择
+  - DOMAIN, gofile.io, 节点选择
   # Proxy - others
-  - DOMAIN-SUFFIX, qichiyu.com, 🔰 节点选择
-  - DOMAIN-SUFFIX, vivaldi.net, 🔰 节点选择
-  - DOMAIN-SUFFIX, f95zone.to, 🔰 节点选择
+  - DOMAIN-SUFFIX, qichiyu.com, 节点选择
+  - DOMAIN-SUFFIX, vivaldi.net, 节点选择
+  - DOMAIN-SUFFIX, f95zone.to, 美国节点
 
   # -- GEOSITE --
-  - GEOSITE, category-ai-!cn, 🤖 GPT服务
-  - GEOSITE, telegram, 📲 电报消息
-  - GEOSITE, youtube, 📹 油管视频
-  - GEOSITE, netflix, 🎥 奈飞视频
-  - GEOSITE, bahamut, 📺 巴哈姆特
-  - GEOSITE, bilibili, 📺 哔哩哔哩
-  - GEOSITE, github, 🐱 GITHUB
-  - GEOSITE, category-games-!cn, 🎮 游戏平台
+  - GEOSITE, category-ai-!cn, GPT服务
+  - GEOSITE, telegram, 电报消息
+  - GEOSITE, youtube, 油管视频
+  - GEOSITE, netflix, 奈飞视频
+  - GEOSITE, bahamut, 巴哈姆特
+  - GEOSITE, bilibili, 哔哩哔哩
+  - GEOSITE, github, GITHUB
+  - GEOSITE, category-games-!cn, 游戏平台
   - GEOSITE, category-games-cn, DIRECT
   - GEOSITE, steam@cn, DIRECT
-  - GEOSITE, category-public-tracker, 🛡️ 隐私防护
+  - GEOSITE, category-public-tracker, 隐私防护
   - GEOSITE, cn, DIRECT
-  - GEOSITE, geolocation-!cn, 🔰 节点选择
+  - GEOSITE, geolocation-!cn, 节点选择
   - GEOSITE, category-companies@cn, DIRECT
-  - GEOSITE, category-companies@!cn, 🔰 节点选择
-  - GEOSITE, gfw, 🔰 节点选择
+  - GEOSITE, category-companies@!cn, 节点选择
+  - GEOSITE, gfw, 节点选择
   - GEOSITE, geolocation-cn, DIRECT
-  - GEOSITE, category-entertainment, 🔰 节点选择
-  - GEOSITE, category-media, 🔰 节点选择
-  - GEOSITE, google, 🔰 节点选择
-  - GEOSITE, category-ecommerce, 🔰 节点选择
+  - GEOSITE, category-entertainment, 节点选择
+  - GEOSITE, category-media, 节点选择
+  - GEOSITE, google, 节点选择
+  - GEOSITE, category-ecommerce, 节点选择
   - GEOSITE, bytedance, DIRECT
-  - GEOSITE, microsoft, 🔰 节点选择
-  - GEOSITE, category-game-platforms-download, ⬇️ 下载服务
-  - GEOSITE, category-ads, 🛑 广告拦截
-  - GEOSITE, category-social-media-!cn, 🔰 节点选择
+  - GEOSITE, microsoft, 节点选择
+  - GEOSITE, category-game-platforms-download, 下载服务
+  - GEOSITE, category-ads, 广告拦截
+  - GEOSITE, category-social-media-!cn, 节点选择
   - GEOSITE, category-entertainment-cn, DIRECT
-  - GEOSITE, category-dev, 🔰 节点选择
+  - GEOSITE, category-dev, 节点选择
   - GEOSITE, paypal, DIRECT
   - GEOSITE, category-media-cn, DIRECT
-  - GEOSITE, tracker, 🛡️ 隐私防护
-
-  # -- GEOIP --
-  - GEOIP, telegram, 📲 电报消息, no-resolve
-  - GEOIP, netflix, 🎥 奈飞视频, no-resolve
+  - GEOSITE, tracker, 隐私防护
 
   # -- RULE-SET --
-  - RULE-SET, Loyalsoldier-reject, 🛑 广告拦截
-  - RULE-SET, Loyalsoldier-icloud, 🔰 节点选择
+  - RULE-SET, Loyalsoldier-reject, 广告拦截
+  - RULE-SET, Loyalsoldier-icloud, 节点选择
   - RULE-SET, Loyalsoldier-apple, DIRECT
-  - RULE-SET, Loyalsoldier-google, 🔰 节点选择
-  - RULE-SET, Loyalsoldier-proxy, 🔰 节点选择
+  - RULE-SET, Loyalsoldier-google, 节点选择
+  - RULE-SET, Loyalsoldier-proxy, 节点选择
   - RULE-SET, Loyalsoldier-direct, DIRECT
   - RULE-SET, Loyalsoldier-private, DIRECT
-  - RULE-SET, Loyalsoldier-gfw, 🔰 节点选择
-  - RULE-SET, Loyalsoldier-tld-not-cn, 🔰 节点选择
-  - RULE-SET, Loyalsoldier-telegramcidr, 📲 电报消息, no-resolve
+  - RULE-SET, Loyalsoldier-gfw, 节点选择
+  - RULE-SET, Loyalsoldier-tld-not-cn, 节点选择
+  - RULE-SET, Loyalsoldier-telegramcidr, 电报消息, no-resolve
   - RULE-SET, Loyalsoldier-cncidr, DIRECT, no-resolve
   - RULE-SET, Loyalsoldier-lancidr, DIRECT, no-resolve
 
- 
-  - GEOIP, LAN, DIRECT, no-resolve
+  # -- GEOIP --
+  - GEOIP, telegram, 电报消息, no-resolve
+  - GEOIP, netflix, 奈飞视频, no-resolve
+  - GEOIP, google, 节点选择, no-resolve
+  - GEOIP, cloudflare, 节点选择, no-resolve
   - GEOIP, CN, DIRECT, no-resolve
-  - MATCH, 🎯 漏网之鱼
+  - MATCH, 漏网之鱼
 

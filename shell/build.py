@@ -271,18 +271,40 @@ def merge_template_configs(type_name, providers):
             # 只有 router 类型是必须的，其他类型如果文件不存在可以跳过
             if type_name == "router":
                 print(f"Warning: Template file {filename} not found.")
+    
+    lines = merged_content.split('\n')
+    
+    for pid, info in providers.items():
+        p_url = info['url']
+        p_name = info['name']
+        
+        in_provider = False
+        provider_indent = 0
+        
+        for i, line in enumerate(lines):
+            stripped = line.lstrip()
+            indent = len(line) - len(stripped)
             
-    # Replacement logic
+            if stripped == f'{pid}:':
+                in_provider = True
+                provider_indent = indent
+                continue
+            
+            if in_provider:
+                if stripped and indent <= provider_indent:
+                    in_provider = False
+                    continue
+                
+                if stripped.startswith('url:'):
+                    parts = line.split('"')
+                    if len(parts) >= 2:
+                        lines[i] = f'{parts[0]}"{p_url}"'
+                    in_provider = False
+        
+    merged_content = '\n'.join(lines)
+    
     for pid, info in providers.items():
         p_name = info['name']
-        p_url = info['url']
-        
-        # 1. 替换 Provider 定义块中的 URL
-        # Match provider block: pid: followed by content, then url: "value"
-        url_pattern = rf'({pid}:[^\n]*\n(?:\s+url:\s*)")[^"]*"'
-        merged_content = re.sub(url_pattern, rf'\g<1>{p_url}"', merged_content)
-        
-        # 2. 将所有的占位符 ID 替换为真实的名称
         merged_content = re.sub(rf'\b{pid}\b', p_name, merged_content)
         
     return merged_content
