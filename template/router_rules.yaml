@@ -1,6 +1,7 @@
 rules:
   # Reject - Ads
   - DOMAIN, api.miwifi.com, 广告拦截
+  - AND,((SRC-IP-CIDR,192.158.10.3/32),(DST-PORT,53)),广告拦截
   # Direct - Custom
   - DOMAIN-SUFFIX, sharvo.top, DIRECT
   - DOMAIN, hcfy.ai, DIRECT
