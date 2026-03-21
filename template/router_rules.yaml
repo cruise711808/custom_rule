@@ -80,7 +80,7 @@ rules:
   - GEOSITE, category-games-!cn, 游戏平台
   - GEOSITE, category-games-cn, DIRECT
   - GEOSITE, steam@cn, DIRECT
-  - GEOSITE, category-public-tracker, 隐私防护
+  - GEOSITE, category-public-tracker, 广告拦截
   - GEOSITE, cn, DIRECT
   - GEOSITE, geolocation-!cn, 节点选择
   - GEOSITE, category-companies@cn, DIRECT
@@ -100,7 +100,7 @@ rules:
   - GEOSITE, category-dev, 节点选择
   - GEOSITE, paypal, DIRECT
   - GEOSITE, category-media-cn, DIRECT
-  - GEOSITE, tracker, 隐私防护
+  - GEOSITE, tracker, 广告拦截
 
   # -- RULE-SET --
   - RULE-SET, Loyalsoldier-reject, 广告拦截

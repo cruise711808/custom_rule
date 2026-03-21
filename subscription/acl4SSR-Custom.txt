@@ -12,7 +12,7 @@ ruleset=🛑 广告拦截,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/mast
 ruleset=🍃 应用净化,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanProgramAD.list
 ruleset=🆎 AdBlock,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanEasyList.list
 ruleset=🆎 AdBlock,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanEasyListChina.list
-ruleset=🛡️ 隐私防护,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanEasyPrivacy.list
+ruleset=� 广告拦截,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanEasyPrivacy.list
 ruleset=📢 谷歌推送,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/GoogleFCM.list
 ruleset=📢 谷歌推送,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/GoogleCN.list
 ruleset=📢 谷歌🇨🇳Play,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/GoogleCNProxyIP.list
@@ -66,7 +66,6 @@ custom_proxy_group=🌏 全球直连`select`[]DIRECT`[]🔰 节点选择
 custom_proxy_group=🛑 广告拦截`select`[]REJECT`[]DIRECT
 custom_proxy_group=🍃 应用净化`select`[]REJECT`[]DIRECT
 custom_proxy_group=🆎 AdBlock`select`[]REJECT`[]DIRECT
-custom_proxy_group=🛡️ 隐私防护`select`[]REJECT`[]DIRECT
 custom_proxy_group=🎯 漏网之鱼`select`[]DIRECT`[]🔰 节点选择`[]🇭🇰 香港节点`[]🇹🇼 台湾节点`[]🇯🇵 日本节点`[]🇰🇷 韩国节点`[]🇸🇬 新加坡节点`[]🇺🇲 美国节点`[]🫰 手动切换
 custom_proxy_group=🇭🇰 香港节点`select`[]⚙️ 香港自动`(?=.*(香港|HK|Hong Kong|🇭🇰|HongKong))(?!.*(低倍率))
 custom_proxy_group=🇹🇼 台湾节点`select`[]⚙️ 台湾自动`(?=.*(台|新北|彰化|TW|Taiwan))(?!.*(低倍率))
