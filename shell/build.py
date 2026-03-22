@@ -254,7 +254,6 @@ def parse_provider_config():
     return providers, provider_names
 
 def merge_template_configs(type_name, providers):
-    # 定义标准模板文件顺序
     template_suffixes = [
         "general",
         "inbound",
@@ -273,7 +272,6 @@ def merge_template_configs(type_name, providers):
             content = file_path.read_text(encoding='utf-8')
             merged_content += content + "\n\n"
         else:
-            # 只有 router 类型是必须的，其他类型如果文件不存在可以跳过
             if type_name == "router":
                 print(f"Warning: Template file {filename} not found.")
     
@@ -311,8 +309,91 @@ def merge_template_configs(type_name, providers):
     for pid, info in providers.items():
         p_name = info['name']
         merged_content = re.sub(rf'\b{pid}\b', p_name, merged_content)
+    
+    if len(providers) == 1:
+        merged_content = disable_provider2_content(merged_content)
         
     return merged_content
+
+
+def disable_provider2_content(content):
+    lines = content.split('\n')
+    result = []
+    in_provider2_block = False
+    provider2_indent = 0
+    i = 0
+    
+    while i < len(lines):
+        line = lines[i]
+        stripped = line.lstrip()
+        indent = len(line) - len(stripped)
+        
+        if stripped.startswith('provider2:'):
+            in_provider2_block = True
+            provider2_indent = indent
+            result.append(line.replace('provider2:', '# provider2:', 1))
+            i += 1
+            continue
+        
+        if in_provider2_block:
+            if stripped and indent <= provider2_indent:
+                in_provider2_block = False
+            else:
+                result.append('# ' + line)
+                i += 1
+                continue
+        
+        if stripped.startswith('- { name:') and 'provider2' in stripped:
+            if 'use: [provider2]' in stripped:
+                result.append('# ' + line)
+                i += 1
+                continue
+        
+        if 'use: [provider2]' in line:
+            line = re.sub(r',?\s*use: \[provider2\]', '', line)
+            line = line.strip()
+            if line.startswith('- {'):
+                if not line.endswith('}'):
+                    line += ' }'
+            if line == '# }' or line == '- { }':
+                result.append('# ' + lines[i - 1] if result and not result[-1].startswith('# ') else line)
+                i += 1
+                continue
+            result.append(line)
+            i += 1
+            continue
+        
+        if '备份集群' in stripped or '备集群' in stripped:
+            if any(x in stripped for x in ['香港备集群', '台湾备集群', '新加坡备集群', '日本备集群', '韩国备集群', '美国备集群']):
+                result.append('# ' + line)
+                i += 1
+                continue
+        
+        if stripped.startswith('- { name:') and any(x in stripped for x in ['其他备节点', '下载节点']):
+            result.append('# ' + line)
+            i += 1
+            continue
+        
+        if stripped.startswith('- { name:') and '韩国节点' in stripped:
+            result.append(line.replace('韩国主集群", "韩国备集群"', '韩国主集群"'))
+            i += 1
+            continue
+        
+        backup_patterns = [
+            ('香港备集群"', '香港主集群", "香港副集群"'),
+            ('台湾备集群"', '台湾主集群", "台湾副集群"'),
+            ('新加坡备集群"', '新加坡主集群", "新加坡副集群"'),
+            ('日本备集群"', '日本主集群", "日本副集群"'),
+            ('美国备集群"', '美国主集群", "美国副集群"'),
+        ]
+        for old, new in backup_patterns:
+            if old in line:
+                line = line.replace(old, new)
+        
+        result.append(line)
+        i += 1
+    
+    return '\n'.join(result)
 
 def main():
     if len(sys.argv) < 2:
