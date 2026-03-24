@@ -27,6 +27,7 @@ rules:
 
   # Download - Netdisk
   - DOMAIN, api-drive.mypikpak.com, 下载服务
+  - DOMAIN-WILDCARD,dl-*.mypikpak.com,下载服务
   - DOMAIN-KEYWORD, dl-a10b-, 下载服务
   - DOMAIN, mega.nz, 下载服务
   # Download - Game
